@@ -92,7 +92,7 @@
                     <td class="border border-primary-300 block lg:table-cell">
                         <div class="lg:hidden p-2 w-3/4 border-b-2 border-primary-500">
                         OMR/MR ตัวแทนฝ่ายบริหารพิจารณาอนุมัติ</div>
-                        @isset()
+                        @isset($reviewer)
 
                         <div class="m-2">
                             <strong>Name : {{$reviewer->name}}</strong><br>
