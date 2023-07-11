@@ -38,6 +38,7 @@
 
                     </td>
                     <td class="p-2 md:border border-primary-300 table-row-group lg:table-cell md:whitespace-nowrap" data-cell="Department">
+                        {{$user->find($doc->ref->user_id)->department}}
                     </td>
                     <td class="p-2 md:border border-primary-300 table-row lg:table-cell text-left md:text-center" data-cell="Update">
                         <span class="lg:hidden">บังคับใช้ : </span>

@@ -55,22 +55,23 @@ class Create extends Component
             $req=DocumentRequest::with('info')->firstWhere('req_code',$id);
             // dd($req,$id);
             $this->edit_mode=true;
-            $this->req_id = $req->req_code;
-            $this->objective = $req->req_obj;
+            // $this->req_id = $req->req_code;
+            $this->objective = $req->req_obj->value;
             // dd( $req->info->meta_value );
             $this->data = $req->info->meta_value;
+            // dd($req,$req->info->meta_value);
+            if(isset($req->info->meta_value['selectedDocument'])){
+
+                $this->data['selectedDocument'] = $req->info->meta_value['selectedDocument'];
+            }
         }
-        // $this->documents = Document::with('ref')->where('status',1)->whereNot('doc_type','record')->get();
+        $this->documents = Document::with('ref')->where('status',1)->whereNot('doc_type','record')->get();
         // dd($this->documents);
         // $this->objective = 'internal';
         $this->mindate = DocumentRequest::getMinDate();
         $this->year = Carbon::now()->year;
 
     }
-
-
-
-
     public function updatedObjective(){
         if($this->objective == 4){
             // incase select distruct filter doc type FM
@@ -111,8 +112,8 @@ class Create extends Component
         $this->data['code'] = Str::upper($this->data['code']);
     }
 
-    public function updatedSelectedDocument(){
-        $doc = $this->documents->find($this->selectedDocument);
+    public function updatedDataSelectedDocument(){
+        $doc = $this->documents->find($this->data['selectedDocument']);
         // dd($doc);
         if($doc){
             $this->data['code'] = $doc->ref->info->meta_value['code'] ;
@@ -150,8 +151,8 @@ class Create extends Component
     public function store($status=0){
 
 
-        if($this->objective == 'record'){
-            $this->req_id = $this->req_id??DocumentRequest::getNewRecNo();
+        if($this->objective == 7){
+            $this->req_id = $this->req_id??DocumentRequest::getNewRecordNo();
         }else{
             $this->req_id = $this->req_id??DocumentRequest::getNewDarNo();
         }
@@ -159,7 +160,8 @@ class Create extends Component
         // dd($this->req_id);
         if($this->objective == 2 ){
             // revision
-            $this->data['ver']+=1;
+            
+            $this->data['ver']=($this->documents->find($this->data['selectedDocument'])->doc_ver??0) +1;
             // $doc = Document::where('doc_code','like','%'.$this->data['code'])->first();
             // $this->data['type']=$this->data['type']??$doc->doc_type;
         }
@@ -170,26 +172,27 @@ class Create extends Component
                 $this->data['age'] = -1;
             }
         }
-
+        // dd($this->objective,$this->data,($this->data['type']??$this->data['rec_type']).'-'.$this->data['code']);
         $req=DocumentRequest::updateOrCreate([
             // check
             'req_code'=>$this->req_id,
             'req_obj'=>$this->objective,
         ],[
-            'req_title'=>$this->data['type']??$this->data['rec_type'].'-'.$this->data['code'],
+            'req_title'=>($this->data['type']??$this->data['rec_type']).'-'.$this->data['code'],
             'req_status'=>$status,
             'user_id'=>Auth::user()->id,
         ]);
 
         // assign code
-        $filename = $req->req_code.'-'.$req->req_title;
+        $filename = $this->req_id.'-'.($this->data['type']??$this->data['rec_type']).'-'.$this->data['code'];
         $time = now();
-        if(isset($this->data['file_pdf'])){
+        // dd(is_string($this->data['file_pdf']),is_object($this->data['file_pdf']));
+        if(isset($this->data['file_pdf']) && is_object($this->data['file_pdf']) ){
             $ext = $this->data['file_pdf']->getClientOriginalExtension();
             $this->data['file_pdf'] = $this->data['file_pdf']->storePubliclyAs('DocumentRequest', $filename.'-'.$time.'.'.$ext);
         }
 
-        if(isset($this->data['file_word'])){
+        if(isset($this->data['file_word']) && is_object($this->data['file_word']) ){
             $ext = $this->data['file_word']->getClientOriginalExtension();
             $this->data['file_word'] = $this->data['file_word']->storePubliclyAs('DocumentRequest', $filename.'-'.$time.'.'.$ext);
         }
@@ -243,7 +246,8 @@ class Create extends Component
     }
 
     public function resetForm(){
-        $this->resetExcept('objective');
+        redirect()->route('document.request.create');
+        // $this->resetExcept('objective');
 
     }
     public function gotoView($req_code){

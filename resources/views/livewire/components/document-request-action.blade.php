@@ -1,14 +1,12 @@
 <div class="@container w-full">
 
-    <div class="hidden @md:flex items-center gap-2">
+    <div class=" @xs:flex items-center gap-2">
         <span>Status : </span> <x-badge color="{{ $req->getColor() }}" icon="tag" label="{{ $req->getStatus() }}" />
-        @if(1==1)
         <x-button negative icon="x" label="Delete" class="!justify-start" wire:click="delete" spinner />
         <x-button primary icon="check" label="Submit" class="!justify-start" wire:click="edit" spinner />
         <x-button info icon="check" label="Review" class="!justify-start" wire:click="review" spinner />
         <x-button positive icon="check" label="Approve" class="!justify-start" wire:click="approve" spinner />
         <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
-        @endif
     </div>
     <div class="@xs:flex grid gap-2">
 

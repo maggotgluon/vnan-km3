@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Components;
 
 use App\Models\Document;
 use App\Models\DocumentRequest;
+use App\Models\User;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -28,7 +29,7 @@ class DocumentRequestAction extends Component
         // $this->req = DocumentRequest::firstWhere('req_code',$code);
     }
     public function updateStatus($status){
-        // dd($this->req);
+        // dd($this->req,$status);
         $this->req->req_status = $status;
         if($status === 2){
             $this->req->req_dateReview = now();
@@ -41,7 +42,8 @@ class DocumentRequestAction extends Component
         if($status === 3){
             $this->req->req_dateApprove = now();
             $this->req->user_approve = auth()->user()->id;
-            switch ($this->req->req_obj) {
+            // dd($status,$status === 3,$this->req->req_obj);
+            switch ($this->req->req_obj->value) {
                     case '1':
                         // dd($this->req->req_obj);
                         # code...
@@ -61,6 +63,7 @@ class DocumentRequestAction extends Component
                         # code...
                         break;
                     case '6':
+                        $this->create();
                         # code...
                         break;
                     case '7':
@@ -168,17 +171,24 @@ class DocumentRequestAction extends Component
     // case create new doc obj1 6
     // concern document
     public function create(){
-        Document::create([
-            'doc_type'=>$this->req->info->meta_value['type'],
-            'doc_code'=>$this->req->req_title,
-            'referance_req_code'=>$this->code,
-            'doc_ver'=>$this->req->info->meta_value['ver']??0,
-            'doc_name_th'=>$this->req->info->meta_value['name_th'],
-            'doc_name_en'=>$this->req->info->meta_value['name_en'],
-            'effective'=>$this->req->info->meta_value['effective'],
-            'ages'=>$this->req->info->meta_value['age'],
-            'status'=>1,
-        ]);
+        // dd(User::find($this->req->user_id)->department);
+        try {
+            Document::create([
+                'doc_type'=>$this->req->info->meta_value['type'],
+                'doc_code'=>$this->req->req_title,
+                'referance_req_code'=>$this->code,
+                'doc_ver'=>$this->req->info->meta_value['ver']??0,
+                'doc_name_th'=>$this->req->info->meta_value['name_th'],
+                'doc_name_en'=>$this->req->info->meta_value['name_en'],
+                'effective'=>$this->req->info->meta_value['effective'],
+                'ages'=>$this->req->info->meta_value['age'],
+                'department'=>User::find($this->req->user_id)->department->value,
+                'status'=>1,
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        
     }
 
     // case revision obj2
@@ -196,6 +206,7 @@ class DocumentRequestAction extends Component
             'doc_name_en'=>$this->req->info->meta_value['name_en'],
             'effective'=>$this->req->info->meta_value['effective'],
             'ages'=>$this->req->info->meta_value['age'],
+            'department'=>User::find($this->req->user_id)->department->value,
             'status'=>2,
         ]);
     }
@@ -207,6 +218,7 @@ class DocumentRequestAction extends Component
             'doc_code'=>$this->req->req_title,
             'status'=>1
         ],['status'=>-1]);
+        
         // $doc->save();
     }
 

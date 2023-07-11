@@ -58,6 +58,7 @@
 
 
             <div class="mt-4">
+                {{-- {{$objective}} --}}
                 @switch($objective)
                 @case(1)
                 <!-- create -->
@@ -132,6 +133,11 @@
 
                         <div class="col-span-2 grid gap-2">
                             <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                @isset($data['file_pdf'])
+                                <x-badge>
+                                    <a href="{{asset($data['file_pdf'])}}"> PDF File</a>
+                                </x-badge>
+                                @endisset
                                 <!-- File Input -->
                                 <x-input label="Pdf" type="file" wire:model.lazy="data.file_pdf"
                                 accept=".pdf" class="file:mr-2 file:py-2 file:px-4
@@ -147,6 +153,11 @@
                             </div>
 
                             <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                @isset($data['file_word'])
+                                <x-badge>
+                                    <a href="{{asset($data['file_word'])}}"> Word File</a>
+                                </x-badge>
+                                @endisset
                                 <!-- File Input -->
                                 <x-input label="Word" type="file"
                                 accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
@@ -183,7 +194,8 @@
                 <x-card title="ขอเปลี่ยนแปลง/แก้ไขเอกสาร - Revision">
                     <div class="grid md:grid-cols-4 gap-4">
                         <div class="col-span-2">
-                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="selectedDocument">
+                            {{-- {{$selectedDocument}} --}}
+                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="data.selectedDocument">
                                 <option value="nulled">Please select Document to add revise</option>
                                 @foreach ($documents as $doc)
                                 <option value="{{ $doc->id }}"> {{ $doc->doc_code }} : {{ $doc->doc_name_th }}/{{ $doc->doc_name_en }}</option>
@@ -257,7 +269,7 @@
                 <x-card title="ขอยกเลิก - Canclation">
                     <div class="grid md:grid-cols-4 gap-4">
                         <div class="col-span-2">
-                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="selectedDocument">
+                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="data.selectedDocument">
                                 <option value="nulled">Please select Document to add revise</option>
                                 @foreach ($documents as $doc)
                                 <option value="{{ $doc->id }}"> {{ $doc->doc_code }} : {{ $doc->doc_name_th }}/{{ $doc->doc_name_en }}</option>
@@ -288,7 +300,7 @@
                 <x-card title="ขอทำลายบันทึกเอกสาร - Destruction">
                     <div class="grid md:grid-cols-4 gap-4">
                         <div class="col-span-2">
-                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="selectedDocument">
+                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="data.selectedDocument">
                                 <option value="nulled">Please select Document to add revise</option>
                                 @foreach ($documents as $doc)
                                 <option value="{{ $doc->id }}"> {{ $doc->doc_code }} : {{ $doc->doc_name_th }}/{{ $doc->doc_name_en }}</option>
@@ -320,7 +332,7 @@
                 <x-card title="ขอสำเนาเอกสารเพิ่มเติม - Additional Copy">
                     <div class="grid md:grid-cols-4 gap-4">
                         <div class="col-span-4">
-                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="selectedDocument">
+                            <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="data.selectedDocument">
                                 <option value="nulled">Please select Document to add revise</option>
                                 @foreach ($documents as $doc)
                                 <option value="{{ $doc->id }}"> {{ $doc->doc_code }} : {{ $doc->doc_name_th }}/{{ $doc->doc_name_en }}</option>
@@ -477,6 +489,7 @@
                         <div class="col-span-4">
                             <x-textarea label="คำอธิบาย" placeholder="คำอธิบาย" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
                         </div>
+                        <x-fileupload wire:model.lazy="data.file_pdf" accept=".pdf"/>
                         <div class="col-span-4" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                             <!-- File Input -->
                             <x-input label="Pdf" type="file" wire:model.lazy="data.file_pdf" accept=".pdf" class="file:mr-2 file:py-2 file:px-4

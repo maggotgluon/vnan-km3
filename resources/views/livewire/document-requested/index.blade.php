@@ -17,7 +17,7 @@
                 @foreach ($requests as $req)
                 <tr class="border border-primary-300 border-separate">
                 <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">{{ $req->req_code }}</td>
-                <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">{{ $req->getObjective() }}</td>
+                <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">{{ $req->req_obj->discription() }}</td>
                 <td class="p-2 md:border border-primary-300 table-row-group lg:table-cell md:whitespace-nowrap" data-cell="Detail">
                    <x-button label="{{ $req->req_title }}" :href="route('document.request.show',['id'=>$req->req_code])" />
                    <div>

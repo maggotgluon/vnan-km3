@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('doc_ver')->default('0'); // Rev
             $table->string('doc_name_th');
             $table->string('doc_name_en');
+            $table->string('department');
             $table->date('effective');
             $table->integer('ages');
             $table->string('referance_req_code');

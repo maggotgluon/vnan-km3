@@ -1,7 +1,27 @@
 <div class="w-full">
     Show Single request {{ $req->req_code }}
     <livewire:components.document-request-action :wire:key="$req->req_code" :code="$req->req_code"/>
-    {{ dd($req,$req->info->meta_value) }}
+    {{-- {{ dd($req,$req->info->meta_value) }} --}}
+    
+    <x-badge outline>
+        {{$req->req_obj->discription()}}
+    </x-badge>
+    <x-badge outline>
+        เลขที่เอกสาร : {{$req->req_code}}
+    </x-badge>
+
+    @isset($req->info->meta_value['discription'])
+        <div class="border border-primary-300 rounded-lg p-4 my-2 mt-6 relative">
+            <h2 class="bg-gray-200 absolute top-0 -translate-y-1/2 px-2">
+                คำอธิบาย
+            </h2>
+            {{$req->info->meta_value['discription']}}
+        </div>
+    @endisset
+    {{-- {{var_export(asset($req->info->meta_value['file_pdf']))}} --}}
+    <livewire:components.pdf-viewer :wire:key="$req->req_code" :file="asset($req->info->meta_value['file_pdf'])"/>
+
+
 
     <!-- "id" => 3
     "req_code" => "DAR20230003"

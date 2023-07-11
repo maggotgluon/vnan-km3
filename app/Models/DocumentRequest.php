@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DocumentObjective;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,7 @@ class DocumentRequest extends Model
     protected $casts = [
         'req_dateReview' => 'datetime',
         'req_dateApprove' => 'datetime',
+        'req_obj' => DocumentObjective::class,
     ];
     public static function getNewDarNo(){
         $currentYear = Carbon::now()->year;

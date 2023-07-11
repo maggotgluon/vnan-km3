@@ -18,6 +18,7 @@ class Document extends Model
         'doc_name_en',
         'effective',
         'ages',
+        'department',
         'referance_req_code',
         'status',
     ];

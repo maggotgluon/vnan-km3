@@ -45,16 +45,16 @@
                     </x-slot>
 
                     <x-dropdown.header label="{{Auth::user()->staff_id}}">
-                        <x-dropdown.item label="ข้อมูลของฉัน" />
+                        <x-dropdown.item label="ข้อมูลของฉัน" :href="route('user.show',['id'=>Auth::user()->staff_id])"/>
                 </x-dropdown.header>
 
                 <x-dropdown.item label="ออกจากระบบ" href="{{ route('logout') }}"/>
             </x-dropdown>
             @else
 
-            <x-button href="{{ route('login') }}" label="Log in"/>
+            <x-button href="{{ route('login') }}" label="เข้าสู่ระบบ"/>
             @if (Route::has('register'))
-            <x-button href="{{ route('register') }}" label="Register"/>
+            <x-button href="{{ route('register') }}" label="เพิ่มผู้ใช้งาน"/>
             @endif
             @endauth
         </div>

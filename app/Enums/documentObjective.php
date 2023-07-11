@@ -1,17 +1,28 @@
-<?php declare(strict_types=1);
+<?php 
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
+enum DocumentObjective:int {
+    case NEW = 1;
+    case EDIT = 2;
+    case CANCLE = 3;
+    case DISTROYDATA = 4;
+    case COPY = 5;
+    case EXTRENAL = 6;
+    case RECORD = 7;
 
-/**
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
- */
-final class documentObjective extends Enum
-{
-    const OptionOne = 0;
-    const OptionTwo = 1;
-    const OptionThree = 2;
+
+    public function discription(): string {
+        return match($this)
+        {
+            DocumentObjective::NEW => "ขอออกเอกสารใหม่ - New Registration/Document",
+            DocumentObjective::EDIT => "ขอเปลี่ยนแปลง/แก้ไขเอกสาร - Revision",
+            DocumentObjective::CANCLE => "ขอยกเลิก - Canclation",
+            DocumentObjective::DISTROYDATA => "ขอทำลายบันทึกเอกสาร - Destruction",
+            DocumentObjective::COPY => "ขอสำเนาเอกสารเพิ่มเติม - Additional Copy",
+            DocumentObjective::EXTRENAL => "ขอนำเอกสารภายนอกเข้าระบบ - Register for External Document",
+            DocumentObjective::RECORD => "บีนทึกเอกสาร - Records",
+
+        };
+    }
 }
