@@ -280,7 +280,7 @@
                         </div>
                         <div class="col-span-2">
                             {{-- <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" /> --}}
-                            <x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" min="{{$mindate}}"  wire:model.lazy="data.effective" hint="วันบังคับใช้" />
+                            <x-input label="วันบังคับใช้" type="date" min="{{$mindate}}"  wire:model.lazy="data.effective"/>
                         </div>
 
                         <div class="col-span-4">
@@ -403,7 +403,7 @@
                         <div>
 
                             {{-- <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" /> --}}
-                            <x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" wire:model.lazy="data.effective" hint="วันบังคับใช้" />
+                            <x-input label="วันบังคับใช้" type="date" min="{{$mindate}}"  wire:model.lazy="data.effective"/>
                         </div>
                         <div>
                             <x-input label="อายุเอกสาร" class="pointer-events-none" value="จนกว่าจะมีการเปลี่ยนแปลง " hint="อายุเอกสาร" />
@@ -478,7 +478,7 @@
                         @isset ($data['rec_type'])
                         <div class="col-span-1">
                             <x-native-select label="ฉบับจริงเก็บที่แผนก" wire:model.lazy="data.rec_department_store">
-                                <option value="nulled">Please select Document Type</option>
+                                <option value="nulled">Please select Department</option>
                                 <option value="ADS">ADS</option>
                                 <option value="ENG">ENG</option>
                                 <option value="EVS">EVS</option>
@@ -508,15 +508,16 @@
 
                         {{-- <div class="col-span-4">
                             <x-textarea label="คำอธิบาย" placeholder="คำอธิบาย" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
-                        </div> --}}
-                        <x-fileupload wire:model.lazy="data.file_pdf" accept=".pdf"/>
+                        </div> 
+                        <x-fileupload wire:model.lazy="data.file_pdf" accept=".pdf"/>--}}
                         <div class="col-span-4" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                             <!-- File Input -->
-                            <x-input label="Pdf" type="file" wire:model.lazy="data.file_pdf" accept=".pdf" class="file:mr-2 file:py-2 file:px-4
-                                    file:rounded-full file:border-0
-                                    file:text-xs file:font-semibold
-                                    file:bg-primary-500 file:text-white
-                                    hover:file:bg-primary-700"/>
+                            <x-input label="Pdf" type="file" wire:model.lazy="data.file_pdf" 
+                                    accept=".pdf" class="file:mr-2 file:py-2 file:px-4
+                                        file:rounded-full file:border-0
+                                        file:text-xs file:font-semibold
+                                        file:bg-primary-500 file:text-white
+                                        hover:file:bg-primary-700"/>
 
                                 <!-- Progress Bar -->
                                 <div x-show="isUploading">
