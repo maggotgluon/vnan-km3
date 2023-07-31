@@ -47,7 +47,7 @@
 
                 <option value="1" label="ขอออกเอกสารใหม่ - New Registration/Document" />
                 <option value="2" label="ขอเปลี่ยนแปลง/แก้ไขเอกสาร - Revision" />
-                <option value="3" label="ขอยกเลิก - Canclation" />
+                <option value="3" label="ขอยกเลิก - Cancellation" />
                 <option value="4" label="ขอทำลายบันทึกเอกสาร - Destruction" />
                 <option value="5" label="ขอสำเนาเอกสารเพิ่มเติม - Additional Copy" />
                 <option value="6" label="ขอนำเอกสารภายนอกเข้าระบบ - Register for External Document" />
@@ -118,15 +118,18 @@
                         </div>
                         <div>
 
-                            <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" />
-                            <!-- x-input label="วันบังคับใช้" type="date" min="{{$mindate}}"  wire:model.lazy="data.effective"/> -->
+                            {{-- <x-datetime-picker without-time label="วันบังคับใช้" 
+                                placeholder="วันบังคับใช้" :min="$mindate" 
+                                display-format="D MMMM YYYY" clearable=false 
+                                wire:model.lazy="data.effective" /> --}}
+                            <x-input label="วันบังคับใช้" type="date" min="{{$mindate}}"  wire:model.lazy="data.effective"/>
                         </div>
                         <div>
                             @isset($data['age'])
                             @if ($data['age'] < 0)
                                 <x-input label="อายุเอกสาร" class="pointer-events-none" value="จนกว่าจะมีการเปลี่ยนแปลง " hint="อายุเอกสาร" />
                             @else
-                                <x-input type="number" label="อายุเอกสาร" min="0" wire:model.lazy="data.age" hint="อายุเอกสาร" />
+                                <x-input type="number" label="อายุเอกสาร" min="0" wire:model.lazy="data.age" hint="อายุเอกสาร" suffix="ปี"/>
                             @endif
                             @endisset
                         </div>
@@ -159,7 +162,7 @@
                                 </x-badge>
                                 @endisset
                                 <!-- File Input -->
-                                <x-input label="Word" type="file"
+                                <x-input label="Soft file word/excel" type="file"
                                 accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
                                                 .xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                                 wire:model.lazy="data.file_word"
@@ -203,9 +206,8 @@
                             </x-native-select>
                         </div>
                         <div>
-
-                            <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" />
-                            <!-- x-input type="date" label="วันบังคับใช้" placeholder="วันบังคับใช้" wire:model.lazy="data.effective" hint="วันบังคับใช้" /> -->
+                            {{-- <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" /> --}}
+                            <x-input type="date" label="วันบังคับใช้" placeholder="วันบังคับใช้"  min="{{$mindate}}" wire:model.lazy="data.effective" hint="วันบังคับใช้" />
                         </div>
                         <div>
                             @if ($data['age'] < 0)
@@ -241,7 +243,7 @@
                             </div>
                             <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                                 <!-- File Input -->
-                                <x-input label="Word" type="file" wire:model.lazy="data.file_word" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                <x-input label="Soft file word/excel" type="file" wire:model.lazy="data.file_word" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
                                                 .xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="file:mr-2 file:py-2 file:px-4
                                     file:rounded-full file:border-0
                                     file:text-xs file:font-semibold
@@ -277,12 +279,12 @@
                             </x-native-select>
                         </div>
                         <div class="col-span-2">
-                            <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" />
-                            <!-- x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" wire:model.lazy="data.effective" hint="วันบังคับใช้" /> -->
+                            {{-- <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" /> --}}
+                            <x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" min="{{$mindate}}"  wire:model.lazy="data.effective" hint="วันบังคับใช้" />
                         </div>
 
                         <div class="col-span-4">
-                            <x-textarea label="คำอธิบาย" placeholder="คำอธิบาย" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
+                            <x-textarea label="เหตุผลที่ขอยกเลิก" placeholder="เหตุผลที่ขอยกเลิก" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
                         </div>
                     </div>
 
@@ -306,16 +308,24 @@
                                 <option value="{{ $doc->id }}"> {{ $doc->doc_code }} : {{ $doc->doc_name_th }}/{{ $doc->doc_name_en }}</option>
                                 @endforeach
                             </x-native-select>
+                            @if(isset($data['age']))
+                                อายุเอกสาร {{$data['age']}} ปี
+                            @endif
                         </div>
-                        <div class="col-span-2">
+                        {{-- <div class="col-span-2 flex gap-2"> --}}
 
-                            <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" />
-                            <!-- x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" wire:model.lazy="data.effective" hint="วันบังคับใช้" /> -->
-                        </div>
+                            {{-- <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" /> --}}
+                            
+                            <x-input label="จากปี" placeholder="จากปี" wire:model.lazy="data.from" type="number" 
+                            max="{{now()->format('Y')-$data['age']}}" min="{{now()->format('Y')-10}}" value="{{now()->format('Y')-$data['age']}}"/>
+                            
+                            <x-input label="ถึง ปี" placeholder="ถึง ปี" wire:model.lazy="data.to" type="number" 
+                            max="{{$data['from']??now()->format('Y')}}" min="{{now()->format('Y')-10}}" value="{{$data['from']??now()->format('Y')-$data['age']-1}}"/>
+                        {{-- </div> --}}
 
-                        <div class="col-span-4">
+                        {{-- <div class="col-span-4">
                             <x-textarea label="คำอธิบาย" placeholder="คำอธิบาย" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
-                        </div>
+                        </div> --}}
                     </div>
 
                     <x-slot name="footer">
@@ -330,22 +340,32 @@
                 <!-- Copy -->
 
                 <x-card title="ขอสำเนาเอกสารเพิ่มเติม - Additional Copy">
-                    <div class="grid md:grid-cols-4 gap-4">
-                        <div class="col-span-4">
+                    <div class="grid md:grid-cols-4 gap-4 items-center">
+                        <div class="col-span-2">
                             <x-native-select label="เลือกเอกสารที่ขึ้นทะเบียนแล้ว" wire:model.lazy="data.selectedDocument">
-                                <option value="nulled">Please select Document to add revise</option>
+                                <option value="nulled">Please select Document</option>
                                 @foreach ($documents as $doc)
                                 <option value="{{ $doc->id }}"> {{ $doc->doc_code }} : {{ $doc->doc_name_th }}/{{ $doc->doc_name_en }}</option>
                                 @endforeach
                             </x-native-select>
                         </div>
+
+                        <div class="col-span-2">
+                            <x-radio label="ขอสำเนาเอกสารควบคุม" value="control" wire:model.defer="data.copy_control" />
+                            <x-radio label="ขอสำเนาเอกสารไม่ควบคุม" value="none control" wire:model.defer="data.copy_control" />
+
+                        </div>
                         <div class="col-span-1">
-                            <x-input type="number" label="จำนวน" placeholder="จำนวน" wire:model.lazy="data.copy_number" hint="จำนวน" />
+                            <x-input type="number" label="จำนวน" placeholder="จำนวน" 
+                            wire:model.lazy="data.copy_number" hint="จำนวน" suffix="ชุด"/>
                         </div>
 
                         <div class="col-span-3">
                             <x-input label="สำหรับหน่วยงาน/พื้นที่" placeholder="สำหรับหน่วยงาน/พื้นที่" wire:model.lazy="data.discription" hint="สำหรับหน่วยงาน/พื้นที่" />
                         </div>
+                        <p class="col-span-4">
+                            หมายเหตุ: 7 วันดำเนินการขอสำเนาเอกสาร
+                        </p>
                     </div>
 
                     <x-slot name="footer">
@@ -382,8 +402,8 @@
                         </div>
                         <div>
 
-                            <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" />
-                            <!-- x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" wire:model.lazy="data.effective" hint="วันบังคับใช้" /> -->
+                            {{-- <x-datetime-picker without-time label="วันบังคับใช้" placeholder="วันบังคับใช้" :min="$mindate" display-format="D MMMM YYYY" clearable=false wire:model.lazy="data.effective" /> --}}
+                            <x-input label="วันบังคับใช้" placeholder="วันบังคับใช้" wire:model.lazy="data.effective" hint="วันบังคับใช้" />
                         </div>
                         <div>
                             <x-input label="อายุเอกสาร" class="pointer-events-none" value="จนกว่าจะมีการเปลี่ยนแปลง " hint="อายุเอกสาร" />
@@ -406,7 +426,7 @@
                             </div>
                             <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                                 <!-- File Input -->
-                                <x-input label="Word" type="file" wire:model.lazy="data.file_word" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                                <x-input label="Soft file word/excel" type="file" wire:model.lazy="data.file_word" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
                                                 .xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="file:mr-2 file:py-2 file:px-4
                                     file:rounded-full file:border-0
                                     file:text-xs file:font-semibold
@@ -486,9 +506,9 @@
                         @endisset
 
 
-                        <div class="col-span-4">
+                        {{-- <div class="col-span-4">
                             <x-textarea label="คำอธิบาย" placeholder="คำอธิบาย" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
-                        </div>
+                        </div> --}}
                         <x-fileupload wire:model.lazy="data.file_pdf" accept=".pdf"/>
                         <div class="col-span-4" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                             <!-- File Input -->

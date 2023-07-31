@@ -73,6 +73,7 @@ class Create extends Component
 
     }
     public function updatedObjective(){
+        $this->data = [];
         if($this->objective == 4){
             // incase select distruct filter doc type FM
             $this->documents = Document::with('ref')->where('status',1)->whereNot('doc_type','record')->where('doc_type','FM')->get();

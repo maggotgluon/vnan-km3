@@ -21,21 +21,35 @@
                 </x-slot> --}}
 
                 @if ($editmode)
-                <div class="grid md:grid-cols-3 gap-2">
+                <div class="grid md:grid-cols-3 gap-2 items-center">
                     
                     <div class="md:col-span-2"><x-input label="ชื่อ" wire:model="userdata.name"/></div>
-                    <x-input label="รหัสพนักงาน" wire:model="userdata.staff_id"/>
+                    @if(1==2)
+                        <x-input label="รหัสพนักงาน" wire:model="userdata.staff_id"/>
+                    @else
+                        รหัสพนักงาน : {{ $user->staff_id }}
+                    @endif
                     <x-input label="Email" wire:model="userdata.email"/>
-                    <div class="md:col-span-2"><x-input label="ตำแหน่ง" wire:model="userdata.position"/></div>
+                    
+                    @if(1==2)
+                        <div class="md:col-span-2"><x-input label="ตำแหน่ง" wire:model="userdata.position"/></div>
+                    @else
+                        แผนก : {{ $user->department }}
+                    @endif
+
+                    @if(1==2)
                     <x-native-select label="แผนก" 
                     wire:model="userdata.department">
                         @foreach ($departmentList as $department)
                             <option value="{{$department->department}}">{{$department->department}}</option>
                         @endforeach
                     </x-native-select>
-                    <x-input label="แผนก" wire:model="userdata.department"/>
+                    @else
+                        ตำแหน่ง : {{ $user->position }}
+                    @endif
+                    {{-- <x-input label="แผนก" wire:model="userdata.department"/> --}}
                     <div class="md:col-span-2">
-                        <x-input label="หัวหน้าแผนก" wire:model="userdata.department_head"/>
+                        {{-- <x-input label="หัวหน้าแผนก" wire:model="userdata.department_head"/> --}}
                         <x-native-select label="หัวหน้าแผนก" 
                         wire:model="userdata.department_head">
                             @foreach ($HODList as $HOD)
@@ -44,7 +58,19 @@
                         </x-native-select>
                     </div>
                     <hr class="my-4 md:col-span-3" />
+
+
+                    @if(1==2)
                     <x-input label="ระดับผู้ใช้" wire:model="userdata.user_level"/>
+                    <x-native-select label="ระดับผู้ใช้" 
+                    wire:model="userdata.department_head">
+                        @foreach ($HODList as $HOD)
+                            <option value="{{$HOD->id}}">{{$HOD->name}}</option>
+                        @endforeach
+                    </x-native-select>
+                    @else
+                        ระดับผู้ใช้ : {{ $user->user_level->name }}
+                    @endif
                 </div>
                 @else
                     <p>
@@ -75,7 +101,7 @@
 
             </x-card>
 
-            @if($self)
+            @if($self&& $editpassword)
             <x-card title="Password" cardClasses="mb-4" class="grid md:grid-cols-3 gap-2">
             <div><p>
                 กำขหนดรหัสผ่าน

@@ -3,6 +3,8 @@
         <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
     </a>
     <nav class="flex gap-2 w-full">
+
+        @auth
         <x-button flat label="หน้าหลัก" />
 
         <x-dropdown align="left">
@@ -10,9 +12,9 @@
                 <x-button flat label="เอกสาร" />
             </x-slot>
 
-            <x-dropdown.item label="เอกสารขึ้นทะเบียน"
+            <x-dropdown.item label="เอกสารที่ขึ้นทะเบียนแล้ว"
             :href="route('document.index')"/>
-            <x-dropdown.item label="บีนทึกเอกสาร"
+            <x-dropdown.item label="บันทึกที่ขึ้นทะเบียนแล้ว"
             :href="route('record.index')"/>
 
             <x-dropdown.item label="ขึ้นทะเบียนการเอกสาร"
@@ -37,6 +39,7 @@
 
         <x-button flat label="ผู้ใช้งาน" :href="route('user.index')" />
 
+        @endauth
         <div class="ml-auto">
             @auth
                 <x-dropdown>

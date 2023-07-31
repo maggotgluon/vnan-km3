@@ -9,7 +9,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public $selectuser,$userdata;
-    public bool $self=false, $editmode=false;
+    public bool $self=false, $editmode=false,$editpassword=false;
     public $departmentList,$HODList;
 
     public function mount($id){
@@ -25,8 +25,13 @@ class Show extends Component
         $this->editmode=!$this->editmode;
         $this->userdata = $this->selectuser->toArray();
         $this->HODList = $this->selectuser->colleague();
+        $this->HODList = $this->selectuser->colleague();
         // dd($this->userdata);
     }
+    public function togglePassword(){
+        $this->editpassword = !$this->editpassword;
+    }
+    
     public function updatedUserdataDepartment(){
         // dd('department changed');
         $user = User::firstWhere('department',$this->userdata['department']);
