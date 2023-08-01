@@ -12,4 +12,5 @@ enum UserLevelEnums:string {
     case ApproverDCC = '7';
     case Resign = '-1';
     case Other = '0';
+    case SuperAdmin = '99';
 }

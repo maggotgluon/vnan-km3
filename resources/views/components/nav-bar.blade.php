@@ -5,7 +5,7 @@
     <nav class="flex gap-2 w-full">
 
         @auth
-        <x-button flat label="หน้าหลัก" />
+        <x-button flat label="หน้าหลัก" :href="route('home')" />
 
         <x-dropdown align="left">
             <x-slot name="trigger">
@@ -19,8 +19,16 @@
 
             <x-dropdown.item label="ขึ้นทะเบียนการเอกสาร"
             :href="route('document.request.create')" />
-            <x-dropdown.item label="เอการของฉัน"
-            :href="route('document.request.index')" />
+
+            @can('review_document')
+                <x-dropdown.item label="จัดการเอการของฉัน"
+                :href="route('document.request.index')" />
+            @endcan
+            @can('edit_document')
+                <x-dropdown.item label="เอการของฉัน"
+                :href="route('document.request.index')" />
+            @endcan
+
         </x-dropdown>
 
         <x-dropdown align="left">
@@ -36,9 +44,10 @@
             :href="route('training.request.index')" />
         </x-dropdown>
 
-
+        @can('manage_users')
         <x-button flat label="ผู้ใช้งาน" :href="route('user.index')" />
-
+        @endcan
+        
         @endauth
         <div class="ml-auto">
             @auth
