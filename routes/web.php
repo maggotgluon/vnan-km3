@@ -99,6 +99,8 @@ Route::middleware('auth')->group(function () {
 
             // show all training request
             Route::get('index', TrainingRequestedIndex::class)->name('index');
+            // show all my training request
+            Route::get('index/{id}', TrainingRequestedIndex::class)->name('myIndex');
 
             // show single training request
             Route::get('show/{id}', TrainingRequestedShow::class)->name('show');
@@ -130,6 +132,8 @@ Route::middleware('auth')->group(function () {
 
             // show all training request
             Route::get('index', DocumentRequestedIndex::class)->name('index');
+            // show all my training request
+            Route::get('index/{id}', DocumentRequestedIndex::class)->name('myIndex');
 
             // show single training request
             Route::get('show/{id}', DocumentRequestedShow::class)->name('show');

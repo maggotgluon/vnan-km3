@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\DocumentRequested;
 
 use App\Models\DocumentRequest;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,11 +24,22 @@ class Index extends Component
 
     public function actionUpdate(){
         $this->resetPage();
+        
+        $this->reqs = DocumentRequest::with('info');
+        // dd($this->reqs);
 
+    }
+    public function mount($id=null){
+        if($id){
+            $user = User::find($id);
+            // dd(DocumentRequest::with('info')->whereBelongsTo($user));
+            $this->reqs = DocumentRequest::with('info')->whereBelongsTo($user);
+        }else{
+            $this->reqs = DocumentRequest::with('info');
+        }
     }
     public function render()
     {
-        $this->reqs = DocumentRequest::with('info');
 
         if($this->filter_status){
             $this->reqs = $this->reqs->where('req_status',$this->filter_status);
@@ -35,7 +47,10 @@ class Index extends Component
         if($this->search){
             $this->reqs = $this->reqs->where('req_title','like','%'.$this->search.'%');
         }
+        if($this->reqs==null){
 
+            $this->reqs = DocumentRequest::with('info');
+        }
         return view('livewire.document-requested.index',[
             'requests'=>$this->reqs
             // ->where('req_obj',$this->filter_objective)

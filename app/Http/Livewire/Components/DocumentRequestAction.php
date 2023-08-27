@@ -229,7 +229,8 @@ class DocumentRequestAction extends Component
     // case create new rec obj7
     // not concern
     public function createRecord(){
-        // dd(now()->year($this->req->info->meta_value['rec_effective'])->day(1)->month(1)->hour(0)->minute(0)->second(0));
+        $effective=$this->req->req_obj->value==7?'':$this->req->info->meta_value['rec_effective'];
+        // dd($this->req->req_obj->value,$effective);
         Document::create([
             'doc_type'=>'record',
             'doc_code'=>$this->req->req_title,
@@ -237,7 +238,8 @@ class DocumentRequestAction extends Component
             'doc_name_th'=>$this->req->req_title,
             'doc_name_en'=>$this->req->req_title,
             'doc_ver'=>-1,
-            'effective'=>now()->year($this->req->info->meta_value['rec_effective'])->day(1)->month(1)->hour(0)->minute(0)->second(0),
+            'effective'=>now()->year($effective)->day(1)->month(1)->hour(0)->minute(0)->second(0),
+            'department'=>User::find($this->req->user_id)->department->value,
             'ages'=>0,
             'status'=>1,
         ]);

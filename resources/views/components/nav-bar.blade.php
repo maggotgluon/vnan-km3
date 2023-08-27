@@ -21,12 +21,12 @@
             :href="route('document.request.create')" />
 
             @can('review_document')
-                <x-dropdown.item label="จัดการเอการของฉัน"
+                <x-dropdown.item label="จัดการเอกสาร"
                 :href="route('document.request.index')" />
             @endcan
             @can('edit_document')
-                <x-dropdown.item label="เอการของฉัน"
-                :href="route('document.request.index')" />
+                <x-dropdown.item label="เอกสารของฉัน"
+                :href="route('document.request.myIndex',Auth::user())" />
             @endcan
 
         </x-dropdown>
