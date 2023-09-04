@@ -27,13 +27,13 @@
     </head>
     <body>
 
-        <aside class="fixed bottom-2 right-2 group hover:opacity-100 transition-all bg-slate-400 p-1 rounded-lg drop-shadow-md overflow-hidden z-50 ">
-            <x-badge white class="transition-all group-hover:-translate-y-full delay-100" icon="home" label="environment : {{ env('APP_ENV') }}" />
-            @if (env('APP_DEBUG'))
-                <br><x-badge rounded warning class="transition-all group-hover:translate-y-full delay-200" label="Debug Mode" />
-            @endif
-        </aside>
-
+        @if (env('APP_DEBUG'))
+            <aside class="fixed bottom-2 right-2 group hover:opacity-100 transition-all bg-slate-400 p-1 rounded-lg drop-shadow-md overflow-hidden z-50 ">
+                <x-badge white class="transition-all group-hover:-translate-y-full delay-100" icon="home" label="environment : {{ env('APP_ENV') }}" /><br>
+                <x-badge rounded warning class="transition-all group-hover:translate-y-full delay-200" label="Debug Mode" />
+            </aside>
+            
+        @endif
         @yield('body')
 
         @yield('script')

@@ -14,9 +14,13 @@
                     <h1 class="text-5xl font-extrabold tracking-wider text-center text-gray-600">
                         {{ config('app.name') }}
                     </h1>
+                    @auth
+                    ยินดีต้อนรับ {{Auth::user()->name}}
+                    @else
                     <div class="flex justify-center">
                         <x-button href="{{ route('login') }}" label="เข้าสู่ระบบ"/>
                     </div>
+                    @endauth
                 </div>
             </div>
         </div>

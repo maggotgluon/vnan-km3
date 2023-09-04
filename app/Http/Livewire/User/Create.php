@@ -9,7 +9,7 @@ class Create extends Component
 {
     private $user;
 
-    public function mount($id){
+    public function mount($id=null){
         $this->user = User::firstWhere('staff_id',$id);
     }
     public function render()

@@ -1,7 +1,6 @@
 <div class="w-full p-2">
-    show all user
     <div class="flex gap-2 items-end my-2">
-        <x-native-select
+        <!-- <x-native-select
             label="Department"
             placeholder="Select one status"
             :options="['Active', 'Pending', 'Stuck', 'Done']"
@@ -12,11 +11,23 @@
             placeholder="Select one status"
             :options="['Active', 'Pending', 'Stuck', 'Done']"
             wire:model="model"
-        />
+        /> -->
         <span class="ml-auto">
-        <x-input label="search"/>
+        <x-input label="search" placeholder="search">
+            <x-slot name="append">
+                <div class="absolute inset-y-0 right-0 flex items-center p-0.5">
+                    <x-button 
+                        class="h-full rounded-r-md"
+                        icon="search"
+                        primary
+                        flat
+                        squared
+                    />
+                </div>
+            </x-slot>
+        </x-input>
         </span>
-        <x-button label="create new"/>
+        <x-button outline positive icon="user-add" label="create new" :href="route('user.create')" />
     </div>
     <div class="hidden">
         <x-badge flat red label="Laravel">
