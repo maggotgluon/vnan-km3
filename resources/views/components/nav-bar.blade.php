@@ -47,6 +47,16 @@
         @can('manage_users')
         <x-button flat label="ผู้ใช้งาน" :href="route('user.index')" />
         @endcan
+        @can('toggle')
+        <div class="my-auto">
+            <x-button rounded flat outline
+            label="{{Auth::user()->permissions->firstWhere('parmission_name','admin')->allowance==1?'is admin':'not admin'}}" 
+            icon="{{Auth::user()->permissions->firstWhere('parmission_name','admin')->allowance==1?'check':'x'}}"
+            color="{{Auth::user()->permissions->firstWhere('parmission_name','admin')->allowance==1?'positive':'negative'}}"
+            :href="route('admin.toggle')" />
+            
+        </div>
+        @endcan
         
         @endauth
         <div class="ml-auto">

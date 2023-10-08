@@ -2,7 +2,7 @@
 
     <div class="hidden @md:flex items-center gap-2">
         <span>Status : </span> <x-badge color="{{ $req->getColor() }}" icon="tag" label="{{ $req->getStatus() }}" />
-        @if(1==1)
+        @if(1==2)
         <x-button negative icon="x" label="Delete" class="!justify-start" wire:click="delete" spinner />
         <x-button primary icon="check" label="Submit" class="!justify-start" wire:click="edit" spinner />
         <x-button info icon="check" label="Review" class="!justify-start" wire:click="review" spinner />
@@ -21,25 +21,31 @@
             </div>
         </div>
         @else
+        <!-- {{$req->req_status}} -->
         @switch($req->req_status)
             @case(0)
                 <x-button negative icon="x" label="Delete" class="!justify-start" wire:click="delete" spinner />
                 <x-button primary icon="check" label="Submit" class="!justify-start" wire:click="edit" spinner />
                 @break
             @case(1)
-                <x-button info icon="check" label="Review" class="!justify-start" wire:click="review" spinner />
-                @if (!$remark)
-                    <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
-                @endif
+                @can('review_trainDocument')
+                    <x-button info icon="check" label="Review" class="!justify-start" wire:click="review" spinner />
+                    @if (!$remark)
+                        <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
+                    @endif
+                
+                @endcan
                 @break
             @case(2)
-                <x-button positive icon="check" label="Approve" class="!justify-start" wire:click="approve" spinner />
-                @if (!$remark)
-                    <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
-                @endif
+                @can('publish_trainDocument')
+                    <x-button positive icon="check" label="Approve" class="!justify-start" wire:click="approve" spinner />
+                    @if (!$remark)
+                        <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
+                    @endif
+                @endcan
                 @break
             @default
-
+                -
         @endswitch
         @endif
     </div>

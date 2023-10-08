@@ -43,6 +43,7 @@
             </div>
         @endif
         @isset($info['filePDF'])
+        <x-button href="{{ asset($info['filePDF']) }}" label="PDF"/>
         <object data="{{ asset($info['filePDF']) }}" type="application/pdf" width="100%" height="600px">
           <p>Unable to display PDF file. <a href="{{ asset($info['filePDF']) }}">Download</a> instead.</p>
         </object>
@@ -81,24 +82,23 @@
                     <td class="border border-primary-300 block lg:table-cell">
                         <div class="lg:hidden p-2 w-3/4 border-b-2 border-primary-500">
                         DCC เจ้าหน้าที่ควบควมเอกสาร</div>
-                        @isset($reviewer)
-
+                        @if($reviewer!=null && $reviewer!="")
                         <div class="m-2">
                             <strong>Name : {{$reviewer->name}}</strong><br>
                             <strong>Date : {{$req->req_dateReview}}</strong>
                         </div>
-                        @endisset
+                        @endif
                     </td>
                     <td class="border border-primary-300 block lg:table-cell">
                         <div class="lg:hidden p-2 w-3/4 border-b-2 border-primary-500">
                         OMR/MR ตัวแทนฝ่ายบริหารพิจารณาอนุมัติ</div>
-                        @isset($reviewer)
+                        @if($reviewer!=null && $reviewer!="")
 
                         <div class="m-2">
                             <strong>Name : {{$reviewer->name}}</strong><br>
                             <strong>Date : {{$req->req_dateApprove}}</strong>
                         </div>
-                        @endisset
+                        @endif
                     </td>
                 </tr>
             </tbody>

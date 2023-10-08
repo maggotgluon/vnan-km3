@@ -51,7 +51,7 @@
                 wire:model="filter_paginate"/>
         </span>
     </div>
-
+                <!-- {{$filter_paginate}} -->
     <div class="min-w-full overflow-x-scroll">
         <table class="table-auto w-full min-w-full">
             <thead>
@@ -71,7 +71,9 @@
                         <td class="border border-primary-300 md:text-center" cell-data="department">
                             <x-button label="{{ $req->user->department }}" wire:click="$set($filter_search, $req->user->department)"/></td>
                         <td class="border border-primary-300 md:text-center" cell-data="date">
+                            @isset($req->info->meta_value['start_date'])
                             {{ $req->info->meta_value['start_date'] }}
+                            @endisset
                             @isset($req->info->meta_value['start_time'])
                             <x-badge label="{{ $req->info->meta_value['start_time'] }} " />
                             @endisset
@@ -82,4 +84,5 @@
             </tbody>
         </table>
     </div>
+    {{ $requests->links() }}
 </div>

@@ -44,6 +44,7 @@ class TrainingRequestAction extends Component
         if($this->comment){
             $this->req->remark = auth()->user()->name.' : '.$this->comment;
         }
+        // dd($this->req);
         $this->req->save();
         $this->emitUp('actionUpdate');
     }

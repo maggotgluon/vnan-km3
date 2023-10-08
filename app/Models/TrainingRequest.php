@@ -26,6 +26,7 @@ class TrainingRequest extends Model
         $currentYear = Carbon::now()->year;
         $record = TrainingRequest::whereYear('created_at',$currentYear)
                         ->where('req_code','like','TRAIN%');
+                        // dd($record->get());            
         $num = str_pad($record->count()+1, 4, "0", STR_PAD_LEFT);
         $reqNo = 'TRAIN'.$currentYear.$num;
         // dd($reqNo,$record);

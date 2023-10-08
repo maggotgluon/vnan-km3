@@ -73,6 +73,7 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('trainingRequest') => storage_path('app/TrainingRequest'),
         public_path('DocumentRequest') => storage_path('app/DocumentRequest'),
+        public_path('TrainPDF') => storage_path('app/TrainPDF'),
     ],
 
 ];

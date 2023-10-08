@@ -26,6 +26,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        
+        Gate::define('toggle', function(User $user) {
+            boo:$can=false;
+            $can = $user->id==103;
+            // dd($user->id==103,$can);
+            // dd($can);
+            return $can;
+        });
+
         Gate::define('edit_document', function(User $user) {
 
             boo:$can=false;

@@ -45,8 +45,9 @@ use App\Http\Livewire\User\Show as UserShow;
 |
 */
 
-// Route::view('/', 'home')->name('home');
-Route::view('/', 'welcome')->name('home');
+Route::view('/', 'home')->name('home');
+// Route::view('/', 'welcome')->name('home');
+// Route::view('/', 'close')->name('home');
 
 Route::middleware('guest')->group(function () {
 
@@ -161,5 +162,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', UserCreate::class )->name('edit');
         // show single training qpproved
         Route::get('/{id}', UserShow::class )->name('show');
+    });
+
+    
+    Route::name('admin.')->prefix('admin')->group(function (){
+        Route::get('/toggle', function(){
+            $permission=Auth::user()->permissions->firstWhere('parmission_name','admin');
+            $allowance=$permission->allowance;
+            $permission->allowance = !$allowance;
+            // dd($allowance,$permission);
+            $permission->save();
+            return redirect()->back();
+        } )->name('toggle');
     });
 });

@@ -74,12 +74,12 @@
                                 <div class="md:col-span-2 grid gap-4">
 
                                     <x-datetime-picker without-time
-                                        label="วันสิ้นสุดการอบรม"
-                                        placeholder="วันสิ้นสุดการอบรม"
+                                        label="วันเริ่มต้นการอบรม"
+                                        placeholder="วันเริ่มต้นการอบรม"
                                         :min="$mindate"
-                                        hint="Date End"
+                                        hint="Start End"
                                         display-format="D MMMM YYYY"
-                                        wire:model="data.end_date"
+                                        wire:model="data.start_date"
                                     />
                                     <!-- x-input wire:model.lazy="data.start_date" type="date" label="วันที่เริ่มการอบรม" hint="Date Strat" min="{{$mindate}}" /> -->
                                     <x-input wire:model.lazy="data.start_time" type="time" label="เริ่มเวลา" hint="Time Strat" step="600"/>

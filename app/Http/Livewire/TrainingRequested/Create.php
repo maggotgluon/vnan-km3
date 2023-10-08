@@ -101,6 +101,10 @@ class Create extends Component
             'req_title'=>$this->data['title'],
             'req_status'=>$status,
             'user_id'=>Auth::user()->id,
+            'req_dateReview'=>null,
+            'user_review'=>null,
+            'req_dateReview'=>null,
+            'user_approve'=>null,
         ]);
         // dd($this->data);
         TrainingRequestInfo::updateOrCreate([
@@ -128,7 +132,7 @@ class Create extends Component
     }
     public function updatedDataFilePDF(){
         $filename = Str::camel($this->data['title']);
-        $time = now();
+        $time = now()->valueOf();
         $ext = $this->data['filePDF']->getClientOriginalExtension();
         $this->data['filePDF'] = $this->data['filePDF']->storePubliclyAs('TrainingRequest', $filename.'-'.$time.'.'.$ext);
 

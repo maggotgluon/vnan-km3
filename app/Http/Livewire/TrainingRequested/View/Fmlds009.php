@@ -14,7 +14,7 @@ class Fmlds009 extends Component
     public TrainingRequest $request;
     public function mount($id){
         $this->request = TrainingRequest::with('info')->firstWhere('req_code',$id);
-        $this->info = TrainingRequestInfo::firstWhere('request_req_code',$id)->pluck('meta_value')[0];
+        $this->info = TrainingRequestInfo::where('request_req_code',$id)->pluck('meta_value')[0];
         // dd($this->info['instructor']);
     }
     public function render()
