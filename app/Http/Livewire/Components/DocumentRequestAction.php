@@ -238,7 +238,7 @@ class DocumentRequestAction extends Component
             'doc_name_th'=>$this->req->req_title,
             'doc_name_en'=>$this->req->req_title,
             'doc_ver'=>-1,
-            'effective'=>now()->year($effective)->day(1)->month(1)->hour(0)->minute(0)->second(0),
+            'effective'=>now()->hour(0)->minute(0)->second(0),
             'department'=>User::find($this->req->user_id)->department->value,
             'ages'=>0,
             'status'=>1,
