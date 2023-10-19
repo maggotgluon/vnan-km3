@@ -45,8 +45,8 @@ use App\Http\Livewire\User\Show as UserShow;
 |
 */
 
-Route::view('/', 'home')->name('home');
-// Route::view('/', 'welcome')->name('home');
+Route::view('/', 'welcome')->name('home');
+Route::view('/ma', 'home')->name('ma');
 // Route::view('/', 'close')->name('home');
 
 Route::middleware('guest')->group(function () {
