@@ -45,14 +45,7 @@ use App\Http\Livewire\User\Show as UserShow;
 |
 */
 
-// Route::view('/', 'home')->name('home');
-Route::get('/',function(){
-    if(env('MAINTENANCE', false)){
-        return view('home');
-    }else{
-        return view('welcome');
-    }
-})->name('home');
+Route::view('/', 'home')->name('home');
 // Route::view('/', 'welcome')->name('home');
 // Route::view('/', 'close')->name('home');
 

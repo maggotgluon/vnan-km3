@@ -16,7 +16,7 @@
     <div class="flex gap-2 items-end my-4">
         <x-input label="ค้นหา"
             wire:model.lazy="filter_search" class="focus:w-48 active:w-48"/>
-        <x-native-select label="แผนก"
+        {{-- <x-native-select label="แผนก"
             placeholder="Appointment Date"
             :options="[
                 ['name' => 'IT',  'id' => '1'],
@@ -25,7 +25,7 @@
             ]"
             option-label="name"
             option-value="id"
-            wire:model="filter_objective"/>
+            wire:model="filter_department"/> --}}
 
         @if(1==2)
             <x-datetime-picker without-time clearable
@@ -44,16 +44,21 @@
             @endif
         @endif
         <x-button label="clear" wire:click="clear"/>
-
         <span class="ml-auto">
             <x-native-select label="show"
                 :options="[5,10,25,50]"
                 wire:model="filter_paginate"/>
         </span>
     </div>
-                <!-- {{$filter_paginate}} -->
-    <div class="min-w-full overflow-x-scroll">
-        <table class="table-auto w-full min-w-full">
+    <div class="min-w-full overflow-x-scroll relative">
+        <div wire:loading class="text-center absolute inset-0 top-10">
+            <x-badge flat primary lg label="Loading" class="animate-pulse py-2 px-4">
+                <x-slot name="prepend" class="relative flex items-center">
+                    <x-icon name="cog" class="w-16 animate-spin-slow m-4"/>
+                </x-slot>
+            </x-badge>
+        </div>
+        <table class="table-auto w-full min-w-full transition-all " wire:loading.class="pointer-events-none animate-pulse">
             <thead>
                 <tr class="border border-primary-300 bg-primary-500 text-white">
                     <th class="border border-primary-300"><x-button primary label="เรื่อง / Title" /></th>
@@ -65,11 +70,12 @@
                 @foreach ($requests as $req)
                     <tr>
                         <td class="border border-primary-300 " cell-data="title">
-                            <x-button label="{{$req->req_title}}" href="{{ route('training.show',['id'=>$req->req_code]) }}" /> <br>
-
+                            <x-button label="{{$req->req_title}}" href="{{ route('training.show',['id'=>$req->req_code]) }}" />
                         </td>
                         <td class="border border-primary-300 md:text-center" cell-data="department">
-                            <x-button label="{{ $req->user->department }}" wire:click="$set($filter_search, $req->user->department)"/></td>
+                            <x-button label="{{ $req->user->department }}"/>
+                                 {{-- wire:click="$set($filter_search, $req->user->department)"/> --}}
+                        </td>
                         <td class="border border-primary-300 md:text-center" cell-data="date">
                             @isset($req->info->meta_value['start_date'])
                             {{ $req->info->meta_value['start_date'] }}
@@ -77,12 +83,12 @@
                             @isset($req->info->meta_value['start_time'])
                             <x-badge label="{{ $req->info->meta_value['start_time'] }} " />
                             @endisset
-
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        {{ $requests->links() }}
     </div>
-    {{ $requests->links() }}
 </div>

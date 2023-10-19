@@ -1,11 +1,10 @@
 <div class="w-full p-2">
-    My Training
     <x-dialog class="absolute" z-index="z-50" blur="md" align="center" />
     <div class="flex gap-2 my-4">
         <x-input wire:model="search" type="search" placeholder="Search posts by title..." />
         <x-native-select placeholder="แสดงทั้งหมด"
             :options="[
-                ['name' => 'ฉบับร่าง/Draft',  'id' => 0],
+                ['name' => 'ฉบับร่าง/Draft',  'id' => '0'],
                 ['name' => 'รอการตรวจสอบ/Pending', 'id' => 1],
                 ['name' => 'รอการอนุมัติ/Reviewed',   'id' => 2],
                 ['name' => 'อนุมัติ/Approved',    'id' => 3],
@@ -26,8 +25,15 @@
             </span>
     </div>
 
-    <div class="w-full bg-slate-100 overflow-x-auto soft-scrollbar">
-        <table class="table-auto min-w-full border">
+    <div class="w-full bg-slate-100 overflow-x-auto soft-scrollbar relative min-h-screen">
+        <div wire:loading class="text-center absolute inset-0 top-10">
+            <x-badge flat primary lg label="Loading" class="animate-pulse py-2 px-4">
+                <x-slot name="prepend" class="relative flex items-center">
+                    <x-icon name="cog" class="w-16 animate-spin-slow m-4"/>
+                </x-slot>
+            </x-badge>
+        </div>
+        <table class="table-auto min-w-full border" wire:loading.class="pointer-events-none animate-pulse">
             <thead>
                 <tr class="bg-primary-500 text-white">
                     <th class="w-32 border border-primary-300 hidden md:table-cell"><x-button primary label="No." /></th>
