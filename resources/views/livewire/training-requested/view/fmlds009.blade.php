@@ -55,9 +55,9 @@
         <section class="pb-2">
             <div class="border p-4 mt-2 pb-4">
                 <strong>คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน : </strong>
-
+                @if(isset($info['assessmentTools']))
                 <p>  {!! nl2br( $info['assessmentTools'])??'-' !!} </p>
-
+                @endif
             </div>
             <div class="border p-4 mt-2 pb-4">
                 <strong>เกณฑ์การประเมิน : </strong>
@@ -74,6 +74,7 @@
 
         <section class="pb-2">
             <div class="grid grid-cols-8">
+
                 <p class="col-span-4">
                     <strong>{{__('Requester Information')}}: </strong> {{$requester->name}}
                 </p>
@@ -98,7 +99,8 @@
             </div>
 
             <div class="grid grid-cols-8">
-            <p class="col-span-4">
+                @if(isset($reviewer->name))
+                <p class="col-span-4">
                     <strong>{{__('Reviewed')}}: </strong>{{$reviewer->name??'-'}}
                 </p>
                 <p class="col-span-2">
@@ -107,10 +109,13 @@
                 <p class="col-span-2">
                     <strong>{{__('Date')}}: </strong>{{$req->req_dateReview??'-'}}
                 </p>
+                @endif
             </div>
 
             <div class="grid grid-cols-8">
-            <p class="col-span-4">
+                
+                @if(isset($reviewer->name))
+                <p class="col-span-4">
                     <strong>{{__('Approved')}}: </strong>{{$approver->name??'-'}}
                 </p>
                 <p class="col-span-2">
@@ -119,6 +124,7 @@
                 <p class="col-span-2">
                     <strong>{{__('Date')}}: </strong>{{$req->req_dateApprove??'-'}}
                 </p>
+                @endif
             </div>
         </section>
 

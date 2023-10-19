@@ -45,7 +45,14 @@ use App\Http\Livewire\User\Show as UserShow;
 |
 */
 
-Route::view('/', 'home')->name('home');
+// Route::view('/', 'home')->name('home');
+Route::get('/',function(){
+    if(env('MAINTENANCE', false)){
+        return view('home');
+    }else{
+        return view('welcome');
+    }
+})->name('home');
 // Route::view('/', 'welcome')->name('home');
 // Route::view('/', 'close')->name('home');
 
@@ -66,6 +73,10 @@ Route::get('password/reset/{token}', Reset::class)
 
 Route::middleware('auth')->group(function () {
     // Route::view('/', 'dashboard')->name('dashboard');
+    
+    if(env('MAINTENANCE', false)){
+        return view('home');
+    }
 
     Route::get('email/verify', Verify::class)
         ->middleware('throttle:6,1')
@@ -115,7 +126,6 @@ Route::middleware('auth')->group(function () {
         // show single training qpproved
         Route::get('/show/{id}', TrainingRequestedApprovedShow::class )->name('show');
     });
-
 
     // document
     Route::name('document.')->prefix('document')->group(function (){
@@ -175,4 +185,5 @@ Route::middleware('auth')->group(function () {
             return redirect()->back();
         } )->name('toggle');
     });
+    
 });

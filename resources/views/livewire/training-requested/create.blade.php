@@ -142,7 +142,7 @@
                                         <li>กรณีที่เป็นการทดสอบ กรุณาแนบแบบทดสอบพร้อมระบุเกณฑ์การผ่านประเมิน</li>
                                         <li>กรณีที่เป็นการทดลองปฏิบัติงานจริง กรุณาระบุกิจกรรมพร้อมเกณฑ์การผ่านประเมิน</li>
                                     </ol>
-                                    <x-textarea wire:model.lazy="data.assessmentTools" label="คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน" hint="Assessment Tools :" />
+                                    <x-textarea wire:model.lazy="data.assessmentTools" label="คำถาม/แบบทดสอบ/หัวข้อการปฏิบัติงาน" hint="Assessment Tools :"/>
                                 </div>
                                 <div class="md:col-span-4">
                                     เกณฑ์การประเมิน / Assessment Criteriament :
