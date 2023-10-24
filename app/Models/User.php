@@ -70,9 +70,25 @@ class User extends Authenticatable
     public function colleague(){
         return $this->hasMany(User::class,'department','department')->get();
     }
-
+    public function acknowledgment(){
+        return $this->hasMany(User::class,'department','department')
+                    ->where('user_level','3')->get();
+    }
     public function Training()
     {
         return $this->hasMany(TrainingRequest::class);
+    }
+
+    public function trainingReviewer(){
+        return $this->where('user_level',4)->get();
+    }
+    public function trainingApprover(){
+        return $this->where('user_level',5)->get();
+    }
+    public function documentReviewer(){
+        return $this->where('user_level',6)->get();
+    }
+    public function documentApprover(){
+        return $this->where('user_level',7)->get();
     }
 }

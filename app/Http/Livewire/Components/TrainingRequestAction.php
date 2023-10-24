@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Components;
 
+use App\Jobs\SendEmail;
 use App\Models\TrainingRequest;
+use Illuminate\Support\Facades\Auth;
 use WireUi\Traits\Actions;
 use Livewire\Component;
 
@@ -26,6 +28,24 @@ class TrainingRequestAction extends Component
         $this->code = $code;
         $this->req = TrainingRequest::firstWhere('req_code',$code);
     }
+    public function sendEmailAcknowledgment(){
+        // dd($this->req_id);
+        // dd(Auth::user()->user_level,Auth::user()->acknowledgment());
+        // dd(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'));
+        // Mail::to(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'))->send(new TestMail($this->req_id));
+        // dd(Auth::user()->acknowledgment());
+        $email = array();
+        foreach (Auth::user()->acknowledgment() as $key => $value) {
+            array_push($email, $value->email);
+        }
+        // dd($email);
+        $details = [
+            'email' => $email, //Arr::pluck(Auth::user()->acknowledgment()->toArray(),
+            'data'=>$this->req_id
+        ];
+        // dd($details);
+        SendEmail::dispatch($details);
+    }
     public function updateStatus($status){
         // dd($this->req);
         $this->req->req_status = $status;
@@ -44,8 +64,10 @@ class TrainingRequestAction extends Component
         if($this->comment){
             $this->req->remark = auth()->user()->name.' : '.$this->comment;
         }
+
         // dd($this->req);
         $this->req->save();
+        \Log::channel('training_log')->info(Auth::user()->name.' update '.$this->req->req_id.' status '.$status.' data : '.$this->req);
         $this->emitUp('actionUpdate');
     }
 

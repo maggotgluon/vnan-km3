@@ -5,6 +5,7 @@ namespace App\Http\Livewire\TrainingRequested\View;
 use App\Models\TrainingRequest;
 use App\Models\TrainingRequestInfo;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Fmlds006 extends Component
@@ -16,6 +17,20 @@ class Fmlds006 extends Component
         $this->request = TrainingRequest::with('info')->firstWhere('req_code',$id);
         // $this->info = TrainingRequestInfo::firstWhere('request_req_code',$id)->pluck('meta_value')[0];
         // dd($this->info['instructor']);
+
+        // dd($this->info);
+        $validated = Validator::make($this->request->info->meta_value,[
+            'title' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'duration' => 'required',
+            'venue' => 'required',
+            'lecturer' => 'required',
+            'institution' => 'required',
+            'Hightlihts' => 'required',
+            'applic_action' => 'required',
+        ]);
+        $this->val=$validated->errors()->all();
     }
     public function render()
     {

@@ -178,6 +178,10 @@
                         </form>
                         <!-- x-form> -->
                         <x-slot name="footer">
+                            @isset($req_id)
+                                {{$req_id}}
+                                <x-button label="sendemail" wire:click="sendEmail" />
+                            @endisset
                             <div class="flex justify-between items-center">
                                 <x-button label="บันทึกฉบับร่าง" flat negative wire:click="savedraft" />
                                 <x-button label="ยื่นส่งเอกสาร" primary wire:click="submit" />

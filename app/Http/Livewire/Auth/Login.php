@@ -31,7 +31,7 @@ class Login extends Component
 
             return;
         }
-
+        \Log::info(Auth::user()->name.' login');
         return redirect()->intended(route('home'));
     }
 

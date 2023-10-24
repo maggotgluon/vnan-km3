@@ -56,6 +56,16 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+        'training_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/training_log.log'),
+            'level' => 'debug',
+        ],
+        'document_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/document_log.log'),
+            'level' => 'debug',
+        ],
 
         'single' => [
             'driver' => 'single',
@@ -67,7 +77,7 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'days' => 14,
+            'days' => 30,
         ],
 
         'slack' => [

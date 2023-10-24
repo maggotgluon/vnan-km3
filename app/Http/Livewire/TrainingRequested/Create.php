@@ -2,13 +2,20 @@
 
 namespace App\Http\Livewire\TrainingRequested;
 
+use App\Mail\TestMail;
 use App\Models\TrainingRequest;
 use App\Models\TrainingRequestInfo;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use App\Jobs\SendEmail;
 
 use WireUi\Traits\Actions;
 use Livewire\WithFileUploads;
@@ -29,7 +36,9 @@ class Create extends Component
         "objective" => 'required',
         "data.instructor" => 'required',
         "data.title" => 'required|min:6|regex:/^[-_ ก-๏a-zA-Z \d\s]+$/u|',
-        // "data.filePDF" => 'required|mimes:pdf'
+        "data.start_date" => 'required',
+        "data.end_date" => 'required',
+        "data.filePDF" => 'required|mimes:pdf'
         // "data.filePDF" => 'required|mimes:application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ];
 
@@ -80,7 +89,43 @@ class Create extends Component
         }
     }
     public function submit(){
-        $validate = $this->validate();
+        if($this->objective == 'internal'){
+            $validate = $this->validate([
+                "objective" => 'required',
+                "data.instructor" => 'required',
+                "data.title" => 'required|min:6|regex:/^[-_ ก-๏a-zA-Z \d\s]+$/u|',
+                "data.start_date" => 'required',
+                "data.start_time" => 'required',
+                "data.end_date" => 'required',
+                "data.end_time" => 'required',
+                "data.subjectDetailsDiscription" => 'required',
+                "data.information_time" => 'required',
+                "data.activityDiscription" => 'required',
+                "data.activity_time" => 'required',
+                "data.evaluateDiscription" => 'required',
+                "data.evaluate_time" => 'required',
+                "data.assessmentProcess" => 'required',
+                "data.assessmentTools" => 'required',
+                "data.criteriamentPass" => 'required',
+                "data.criteriamentNopass" => 'required',
+                "data.filePDF" => 'required|mimes:pdf'
+            ]);
+        }else{
+            $validate = $this->validate([
+                "data.instructor" => 'required',
+                "data.title" => 'required|min:6|regex:/^[-_ ก-๏a-zA-Z \d\s]+$/u|',
+                "data.start_date" => 'required',
+                "data.end_date" => 'required',
+                "data.duration" => 'required',
+                "data.venue" => 'required',
+                "data.lecturer" => 'required',
+                "data.institution" => 'required',
+                "data.Hightlihts" => 'required',
+                "data.applic_action" => 'required',
+                "data.filePDF" => 'required|mimes:pdf'
+            ]);
+        }
+        
         // $this->req_id = $this->req_id??TrainingRequest::getNewExternalNo();
         $this->store(1);
 
@@ -113,7 +158,7 @@ class Create extends Component
         ],[
             'meta_value'=>$this->data,
         ]);
-
+        \Log::channel('training_log')->info(Auth::user()->name.' update '.$this->req_id.' status '.$status.' data : '.$this->data);
         $this->sendNotification($req);
     }
     public function render()
@@ -141,7 +186,45 @@ class Create extends Component
             $description = $this->data['filePDF']
         );
     }
-
+    public function sendEmail($user=null){
+        // dd($this->req_id);
+        // dd(Auth::user()->user_level,Auth::user()->acknowledgment());
+        // dd(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'));
+        // Mail::to(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'))->send(new TestMail($this->req_id));
+        // dd($user);
+        $user?null:'self';
+        switch ($user) {
+            case 'acknowledgment':
+                $sendTo=Auth::user()->acknowledgment();
+                break;
+            case 'trainingReviewer':
+                $sendTo=Auth::user()->trainingReviewer();
+                break;
+            case 'trainingApprover':
+                $sendTo=Auth::user()->trainingApprover();
+                break;
+            
+            default:
+                $sendTo=Auth::user();
+                break;
+        }
+        /* dd(get_class($sendTo)==="App\Models\User" ); */
+        if(get_class($sendTo)==="App\Models\User"){
+            $email = $sendTo->email;
+        }else{
+            $email = array();
+            foreach ($sendTo as $key => $value) {
+                array_push($email, $value->email);
+            }
+        }
+        // dd($email);
+        $details = [
+            'email' => $email, //Arr::pluck(Auth::user()->acknowledgment()->toArray(),
+            'data'=>$this->req_id
+        ];
+        // dd($details);
+        SendEmail::dispatch($details);
+    }
     public function sendNotification(TrainingRequest $req){
 
         if($req->req_status){
@@ -160,6 +243,9 @@ class Create extends Component
                     'params' => $req->req_code,
                 ],
             ]);
+
+            $this->sendEmail('trainingReviewer');
+
         }else{
             $this->notification()->success(
                 $title = 'บันทึกสำเร็จ',
@@ -170,6 +256,8 @@ class Create extends Component
                 redirect()->route('training.request.edit',['id'=>$req->req_code]);
             // }
         }
+        
+
     }
 
     public function resetForm(){

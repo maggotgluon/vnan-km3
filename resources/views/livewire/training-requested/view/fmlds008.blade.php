@@ -5,6 +5,26 @@
     <x-slot name="rev">
         {{ __('Rev. 01 : 15.03.2019') }}
     </x-slot>
+
+    @if ($val)
+        <x-errors />
+        <div class="container w-full h-screen grid place-items-center">
+        <x-card title="Error" class="container ">
+                {{-- {{dd($req)}} --}}
+                @foreach ($val as $msg)
+                {{-- {{dd($msg)}} --}}
+                <x-badge icon="exclamation" warning label="{{$msg}}" />
+                @endforeach
+                <x-slot name="footer">
+                    <livewire:components.training-request-action :wire:key="$req->req_code" :code="$req->req_code"/>
+                </x-slot>
+
+        </x-card>
+        </div>
+
+        {{-- {{$val}} --}}
+        {{-- {{dd($val,$val->all()[0])}} --}}
+    @else
     <div id="FM-LDS-008" class="text-sm max-w-3xl m-auto p-2 shadow-lg print:shadow-none">
         <img class="h-16 w-full object-contain pb-4" src="{{asset('/img/logo.png') }}">
         <section class="pb-4">
@@ -63,7 +83,11 @@
 
                     <tr class="border-y">
                         <td class="font-bold pt-2 pl-2">Remark<br> หมายเหตุ</td>
-                        <td colspan="2" class="pb-8 pt-2"> {!! nl2br($info['evaluateDiscription'])??'-' !!} </td>
+                        <td colspan="2" class="pb-8 pt-2"> 
+                            @isset($info['evaluateDiscription'])
+                                {!! nl2br($info['evaluateDiscription'])??'-' !!} 
+                            @endisset
+                        </td>
 
                     </tr>
 
@@ -127,6 +151,7 @@
 
 
     </div>
+    @endif
 
 
 </div>

@@ -23,7 +23,19 @@
         @endswitch
 
     </div>
+    @if ($val)
 
+        <div class="container w-full  grid place-items-center">
+        <x-card title="Error" class="container ">
+                @foreach ($val as $msg)
+                <x-badge icon="exclamation" warning label="{{$msg}}" />
+                @endforeach
+                <x-slot name="footer">
+                </x-slot>
+
+        </x-card>
+        </div>
+    @else 
     <div class="bg-white rounded-lg drop-shadow-lg gap-2 p-2 mb-4">
         <x-badge label="{{ $req->req_code }}"/>
         <h2 class="text-2xl font-bold pb-4 my-2">{{ $info['title'] }}</h2>
@@ -34,7 +46,7 @@
             <span>Department : {{$req->user->department}}</span>
             <span>Department Head : {{$req->user->HOD()->name}}</span>
         </div>
-
+{{-- {{dd($info)}} --}}
         @if($req->req_obj=='internal')
             <div class="grid lg:grid-cols-2 gap-2 mb-4">
                 <span class="lg:col-span-2">Instructor : {{$instructor->name}}</span>
@@ -103,27 +115,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
-     <!-- dd($info) }} -->
-
-
-    <!-- "title" => "Tenetur culpa nam suscipit et delectus"
-    "Remark" => "Voluptatem aliquam at reprehenderit est. Exercitationem eligendi illum necessitatibus numquam recusandae. Fuga qui possimus id repudiandae at earum."
-    "end_date" => "2023-10-06"
-    "end_time" => "14:15"
-    "objective" => "Omnis sint accusantium pariatur ex dignissimos aut corrupti soluta. Ut aut ut incidunt. Excepturi nulla facere qui deleniti et dolore eum nostrum ut."
-    "instructor" => 1
-    "start_date" => "2023-10-20"
-    "start_time" => "10:50"
-    "activity_time" => "199"
-    "evaluate_time" => "184"
-    "assessmentTools" => "Alias non quia et odit culpa consectetur et. Dolore in sed ratione et et nemo ullam. Id voluptatibus id et cumque."
-    "criteriamentPass" => "Ut ut omnis debitis."
-    "information_time" => "391"
-    "assessmentProcess" => array:3 [▶]
-    "criteriamentNopass" => "Natus voluptatem ipsam deleniti et provident qui perspiciatis qui optio."
-    "activityDiscription" => "Esse et quo dolor eum quisquam sint quia distinctio. Suscipit dolores est explicabo nostrum illo cumque consequuntur. Quisquam sint aut eos quod ut numquam susc ▶"
-    "evaluateDiscription" => "Minima molestias quia corrupti. Similique dolores fuga ex dolore consequatur porro omnis tenetur rerum. Sequi cum ipsum."
-    "subjectDetailsDiscription" => "Dignissimos enim porro odio beatae et quia." -->
+    </div>   
+    @endif
 </div>

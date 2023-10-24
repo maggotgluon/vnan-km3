@@ -10,7 +10,7 @@
         <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
         @endif
     </div>
-    <div class="@xs:flex grid gap-2">
+    <div class="flex @xs:grid gap-2">
 
         @if ($remark)
         <div class="grid gap-2 w-full">
