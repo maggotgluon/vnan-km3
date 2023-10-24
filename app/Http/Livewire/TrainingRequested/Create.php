@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -108,8 +109,15 @@ class Create extends Component
                 "data.assessmentTools" => 'required',
                 "data.criteriamentPass" => 'required',
                 "data.criteriamentNopass" => 'required',
-                "data.filePDF" => 'required|mimes:pdf'
+                "data.filePDF" => 'required'
             ]);
+            /* $v=Validator::validate($this->data, [
+                'filePDF' => [
+                    'required',
+                    File::types(['pdf'])
+                ],
+            ]);
+            dd($v); */
         }else{
             $validate = $this->validate([
                 "data.instructor" => 'required',
@@ -122,7 +130,7 @@ class Create extends Component
                 "data.institution" => 'required',
                 "data.Hightlihts" => 'required',
                 "data.applic_action" => 'required',
-                "data.filePDF" => 'required|mimes:pdf'
+                // "data.filePDF" => 'required|mimes:pdf'
             ]);
         }
         
@@ -152,13 +160,13 @@ class Create extends Component
             'user_approve'=>null,
         ]);
         // dd($this->data);
-        TrainingRequestInfo::updateOrCreate([
+        $info=TrainingRequestInfo::updateOrCreate([
             // check
             'request_req_code'=>$this->req_id,
         ],[
             'meta_value'=>$this->data,
         ]);
-        \Log::channel('training_log')->info(Auth::user()->name.' update '.$this->req_id.' status '.$status.' data : '.$this->data);
+        \Log::channel('training_log')->info(Auth::user()->name.' update '.$this->req_id.' status '.$status.' data : '.$req.$info);
         $this->sendNotification($req);
     }
     public function render()

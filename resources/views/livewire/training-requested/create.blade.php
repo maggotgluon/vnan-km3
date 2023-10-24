@@ -159,8 +159,8 @@
                                     x-on:livewire-upload-progress="progress = $event.detail.progress"
                                 >
                                     @isset ($data['filePDF'])
-                                        File already upload
-                                    @else
+                                        File already upload {{$data['filePDF']}}
+                                    @endisset
                                         <!-- File Input -->
                                         <!-- accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
                                                 .xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" -->
@@ -172,16 +172,12 @@
                                                 <progress max="100" x-bind:value="progress"></progress>
                                             </div>
                                         </x-input>
-                                    @endisset
+                                    
                                 </div>
                             </div>
                         </form>
                         <!-- x-form> -->
                         <x-slot name="footer">
-                            @isset($req_id)
-                                {{$req_id}}
-                                <x-button label="sendemail" wire:click="sendEmail" />
-                            @endisset
                             <div class="flex justify-between items-center">
                                 <x-button label="บันทึกฉบับร่าง" flat negative wire:click="savedraft" />
                                 <x-button label="ยื่นส่งเอกสาร" primary wire:click="submit" />

@@ -3,7 +3,7 @@
     <div class="flex gap-2 items-end my-4">
 
         <x-native-select label="Internal"
-            placeholder="Appointment Date"
+            placeholder="Request Type"
             :options="[
                 ['name' => 'Internal',  'id' => 'internal'],
                 ['name' => 'External', 'id' => 'external'],
