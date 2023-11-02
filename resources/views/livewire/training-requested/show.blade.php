@@ -54,10 +54,14 @@
                 <span>Time Strat : {{ $info['start_time'] }} - {{ $info['end_time'] }}</span>
             </div>
         @endif
+        {{-- @isset($info['filePDF-certificate'])
+        {{dd($info['filePDF-certificate'])}}
+        <x-button href="{{ asset($info['filePDF-certificate']) }}" label="ดาว์โหลด certificate"/>
+        @endisset --}}
         @isset($info['filePDF'])
-        <x-button href="{{ asset($info['filePDF']) }}" label="PDF"/>
+        <x-button href="{{ asset($info['filePDF']) }}" label="ดาว์โหลด เอกสารประกอบ"/>
         <object data="{{ asset($info['filePDF']) }}" type="application/pdf" width="100%" height="600px">
-          <p>Unable to display PDF file. <a href="{{ asset($info['filePDF']) }}">Download</a> instead.</p>
+            <p>Unable to display PDF file. <a href="{{ asset($info['filePDF']) }}">Download</a> instead.</p>
         </object>
         @endisset
 

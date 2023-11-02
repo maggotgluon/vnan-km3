@@ -252,8 +252,9 @@
                             <div class="md:col-span-4">
                                 <x-textarea label="แนวทางการนำมาประยุกต์ในงาน" hint="Application of new learning on the job" wire:model="data.applic_action" />
                             </div>
+
                             @isset($data['title'])
-                            <div class="md:col-span-4"
+                            <div class="md:col-span-2"
                                     x-data="{ isUploading: false, progress: 0 }"
                                     x-on:livewire-upload-start="isUploading = true"
                                     x-on:livewire-upload-finish="isUploading = false"
@@ -261,9 +262,33 @@
                                     x-on:livewire-upload-progress="progress = $event.detail.progress"
                                 >
                                     <!-- File Input -->
-                                    <x-input type="file" label="เอกสารประกอบ" hint="File PDF"
+                                    <x-input type="file" label="เอกสารประกอบ" hint="เอกสาร PDF"
                                         accept=".pdf"
                                         wire:model="data.filePDF"
+                                        class="file:mr-2 file:py-2 file:px-4
+                                                file:rounded-full file:border-0
+                                                file:text-xs file:font-semibold
+                                                file:bg-primary-500 file:text-white
+                                                hover:file:bg-primary-700">
+
+                                    <!-- Progress Bar -->
+                                        <div x-show="isUploading">
+                                            <progress max="100" x-bind:value="progress"></progress>
+                                        </div>
+                                    </x-input>
+                            </div>
+
+                            <div class="md:col-span-2"
+                                    x-data="{ isUploading: false, progress: 0 }"
+                                    x-on:livewire-upload-start="isUploading = true"
+                                    x-on:livewire-upload-finish="isUploading = false"
+                                    x-on:livewire-upload-error="isUploading = false"
+                                    x-on:livewire-upload-progress="progress = $event.detail.progress"
+                                >
+                                    <!-- File Input -->
+                                    <x-input type="file" label="ใบประกาศ" hint="เอกสาร ใบประกาศ PDF"
+                                        accept=".pdf"
+                                        wire:model="data.filePDF-certificate"
                                         class="file:mr-2 file:py-2 file:px-4
                                                 file:rounded-full file:border-0
                                                 file:text-xs file:font-semibold

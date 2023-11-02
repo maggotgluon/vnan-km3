@@ -194,6 +194,18 @@ class Create extends Component
             $description = $this->data['filePDF']
         );
     }
+    public function updatedDataFilePDFCertificate(){
+        // dd('file');
+        $filename = Str::camel($this->data['title']).'-certificate';
+        $time = now()->valueOf();
+        $ext = $this->data['filePDF-certificate']->getClientOriginalExtension();
+        $this->data['filePDF-certificate'] = $this->data['filePDF-certificate']->storePubliclyAs('TrainingRequest', $filename.'-'.$time.'.'.$ext);
+
+        $this->notification()->success(
+            $title = 'บันทึก File เรียบร้อย',
+            $description = $this->data['filePDF-certificate']
+        );
+    }
     public function sendEmail($user=null){
         // dd($this->req_id);
         // dd(Auth::user()->user_level,Auth::user()->acknowledgment());
