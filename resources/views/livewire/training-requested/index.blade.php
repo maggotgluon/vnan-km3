@@ -50,8 +50,8 @@
                     <td class="p-2 md:border border-primary-300 table-row-group lg:table-cell md:whitespace-nowrap" data-cell="Detail">
                         <x-button label="{{ $req->req_title }}" :href="route('training.request.show',['id'=>$req->req_code])" />
                         <div>
-                            <x-button sm rounded label="edit" :href="route('training.request.edit',['id'=>$req->req_code])"/>
                             @if($req->req_status=='0')
+                            <x-button sm rounded label="edit" :href="route('training.request.edit',['id'=>$req->req_code])"/>
                             @endif
                             @switch($req->req_obj)
                                 @case('internal')

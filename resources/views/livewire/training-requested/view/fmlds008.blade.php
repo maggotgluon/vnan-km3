@@ -84,8 +84,8 @@
                     <tr class="border-y">
                         <td class="font-bold pt-2 pl-2">Remark<br> หมายเหตุ</td>
                         <td colspan="2" class="pb-8 pt-2"> 
-                            @isset($info['evaluateDiscription'])
-                                {!! nl2br($info['evaluateDiscription'])??'-' !!} 
+                            @isset($info['Remark'])
+                                {!! nl2br($info['Remark'])??'-' !!} 
                             @endisset
                         </td>
 

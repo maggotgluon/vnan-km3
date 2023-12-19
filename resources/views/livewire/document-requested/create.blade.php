@@ -138,7 +138,7 @@
                             <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                                 @isset($data['file_pdf'])
                                 <x-badge>
-                                    <a href="{{asset($data['file_pdf'])}}"> PDF File</a>
+                                    <a href="{{asset($data['file_pdf'])}}"> PDF File {{$data['file_pdf']}}</a>
                                 </x-badge>
                                 @endisset
                                 <!-- File Input -->
@@ -505,13 +505,9 @@
                         </div>
                         @endisset
 
-
-                        {{-- <div class="col-span-4">
-                            <x-textarea label="คำอธิบาย" placeholder="คำอธิบาย" wire:model.lazy="data.discription" hint="คำอธิบาย" class="min-h-[30ch]" />
-                        </div> 
-                        <x-fileupload wire:model.lazy="data.file_pdf" accept=".pdf"/>--}}
                         <div class="col-span-4" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                             <!-- File Input -->
+                            
                             <x-input label="Pdf" type="file" wire:model.lazy="data.file_pdf" 
                                     accept=".pdf" class="file:mr-2 file:py-2 file:px-4
                                         file:rounded-full file:border-0

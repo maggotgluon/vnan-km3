@@ -84,10 +84,10 @@
                 <strong>เกณฑ์การประเมิน : </strong>
 
                 <p class="pb-2">
-                    <strong>ผ่าน : </strong> {!! nl2br( $info['criteriamentNopass'])??'-' !!}
+                    <strong>ผ่าน : </strong> {!! nl2br( $info['criteriamentPass'])??'-' !!}
                 </p>
                 <p class="pb-2">
-                    <strong>ไม่ผ่าน : </strong> {!! nl2br( $info['criteriamentPass'])??'-' !!}
+                    <strong>ไม่ผ่าน : </strong> {!! nl2br( $info['criteriamentNopass'])??'-' !!}
                 </p>
 
             </div>
