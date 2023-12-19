@@ -186,7 +186,7 @@ class Create extends Component
 
         // assign code
         $filename = $this->req_id.'-'.($this->data['type']??$this->data['rec_type']).'-'.$this->data['code'];
-        $time = now();
+        $time = now()->valueOf();
         // dd(is_string($this->data['file_pdf']),is_object($this->data['file_pdf']));
         if(isset($this->data['file_pdf']) && is_object($this->data['file_pdf']) ){
             $ext = $this->data['file_pdf']->getClientOriginalExtension();
