@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Components;
 
+use App\Jobs\SendEmailDocument as SendEmail;
 use App\Models\Document;
 use App\Models\DocumentRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -27,6 +29,20 @@ class DocumentRequestAction extends Component
     public function mount($code){
         $this->code = $code;
         // $this->req = DocumentRequest::firstWhere('req_code',$code);
+    }
+    public function sendEmailAcknowledgment(){
+        $email = array();
+        // dd(Auth::user()->acknowledgment(),$email);
+
+        foreach (Auth::user()->acknowledgment() as $key => $value) {
+            array_push($email, $value->email);
+        }
+        $details = [
+            'email' => $email, //Arr::pluck(Auth::user()->acknowledgment()->toArray(),
+            'data'=>$this->code //$this->req_id
+        ];
+        // dd($details);
+        SendEmail::dispatch($details);
     }
     public function updateStatus($status){
         // dd($this->req,$status);

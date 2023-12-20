@@ -11,6 +11,7 @@
         @endif
     </div>
     <div class="flex @xs:grid gap-2">
+        {{-- <x-button label="mail" wire:click="sendEmailAcknowledgment" spinner/> --}}
 
         @if ($remark)
         <div class="grid gap-2 w-full">
