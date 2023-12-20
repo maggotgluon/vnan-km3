@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use App\Jobs\SendEmailDocument as SendEmail;
 
 use WireUi\Traits\Actions;
 use Livewire\WithFileUploads;
@@ -209,6 +210,45 @@ class Create extends Component
         $this->sendNotification($req);
     }
 
+    public function sendEmail($user=null){
+        // dd($this->req_id);
+        // dd(Auth::user()->user_level,Auth::user()->acknowledgment());
+        // dd(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'));
+        // Mail::to(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'))->send(new TestMail($this->req_id));
+        
+        $user?null:'self';
+        switch ($user) {
+            case 'acknowledgment':
+                $sendTo=Auth::user()->acknowledgment();
+                break;
+            case 'documentReviewer':
+                $sendTo=Auth::user()->documentReviewer();
+                break;
+            case 'documentApprover':
+                $sendTo=Auth::user()->documentApprover();
+                break;
+            
+            default:
+                $sendTo=Auth::user();
+                break;
+        }
+        /* dd(get_class($sendTo)==="App\Models\User" ); */
+        if(get_class($sendTo)==="App\Models\User"){
+            $email = $sendTo->email;
+        }else{
+            $email = array();
+            foreach ($sendTo as $key => $value) {
+                array_push($email, $value->email);
+            }
+        }
+        // dd($email);
+        $details = [
+            'email' => $email, //Arr::pluck(Auth::user()->acknowledgment()->toArray(),
+            'data'=>$this->req_id
+        ];
+        // dd($details);
+        SendEmail::dispatch($details);
+    }
     public function sendNotification(DocumentRequest $req){
 
         if($req->req_status){
@@ -227,6 +267,7 @@ class Create extends Component
                     'params' => $req->req_code,
                 ],
             ]);
+            $this->sendEmail('documentReviewer');
         }else{
             $this->notification()->success(
                 $title = 'บันทึกสำเร็จ',

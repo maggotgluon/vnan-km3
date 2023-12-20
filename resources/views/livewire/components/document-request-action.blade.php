@@ -9,7 +9,7 @@
         <x-button warning icon="x" label="Reject" class="!justify-start" wire:click="$set('remark', 'true')" spinner />
     </div> --}}
     <div class="@xs:flex grid gap-2">
-        {{-- <x-button label="mail" wire:click="sendEmailAcknowledgment" spinner/> --}}
+        <x-button label="mail" wire:click="sendEmail" spinner/>
 
         @if ($remark)
         <div class="grid gap-2">

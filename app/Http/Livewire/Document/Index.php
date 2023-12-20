@@ -20,11 +20,12 @@ class Index extends Component
         $schdule = Document::where('status',2)->get();
         if($schdule){
             $docs = Document::where('status',1)->get();
+            // dd($schdule,$docs);
             foreach ($schdule as $key => $doc) {
+
                 if($doc->effective<=now() && $doc->status->value ==2){
                     // dd($doc,$doc->effective<=now()&& $doc->status ==2,$doc->status);
                     // search docs for status 1 change to 0
-    
                     $current = $docs->where('doc_code',$doc->doc_code)->first();
                     if($current){
                         $current->status = 0;

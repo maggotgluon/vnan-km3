@@ -37,11 +37,83 @@ class DocumentRequestAction extends Component
         foreach (Auth::user()->acknowledgment() as $key => $value) {
             array_push($email, $value->email);
         }
+        
         $details = [
             'email' => $email, //Arr::pluck(Auth::user()->acknowledgment()->toArray(),
             'data'=>$this->code //$this->req_id
         ];
         // dd($details);
+        SendEmail::dispatch($details);
+    }
+
+
+    public function sendEmail($user=null){
+        
+                // $sendTo=Auth::user()->documentReviewer()->pluck('email');
+                // $sendTo=$sendTo->merge(Auth::user()->acknowledgment()->pluck('email'));
+                // dd($sendTo);
+        switch ($this->req->req_status) {
+            case 1:
+                # sended
+                $sendTo=Auth::user()->documentReviewer()->pluck('email');
+                $sendTo=$sendTo->merge(Auth::user()->acknowledgment()->pluck('email'));
+                break;
+            case 2:
+                # reviewed
+                $sendTo=Auth::user()->documentApprover()->pluck('email');
+                break;
+            case 3:
+                # approved
+                $sendTo=Auth::user()->acknowledgment()->pluck('email');
+                $sendTo=$sendTo->push(Auth::user()->email);
+                break;
+            case -1:
+                # rejected
+                $sendTo=Auth::user()->acknowledgment()->pluck('email');
+                $sendTo=$sendTo->push(Auth::user()->email);
+                break;
+            default:
+                # code...
+                $sendTo=Auth::user();
+                break;
+        }
+        // dd(Auth::user()->user_level,Auth::user()->acknowledgment());
+        // dd(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'));
+        // Mail::to(Arr::pluck(Auth::user()->acknowledgment()->toArray(),'email'))->send(new TestMail($this->req_id));
+        
+        $user?null:'self';
+        // switch ($user) {
+        //     case 'acknowledgment':
+        //         $sendTo=Auth::user()->acknowledgment();
+        //         break;
+        //     case 'documentReviewer':
+        //         $sendTo=Auth::user()->documentReviewer();
+        //         break;
+        //     case 'documentApprover':
+        //         $sendTo=Auth::user()->documentApprover();
+        //         break;
+            
+        //     default:
+        //         $sendTo=Auth::user();
+        //         break;
+        // }
+        /* dd(get_class($sendTo)==="App\Models\User" ); */
+        // dd($this->req->req_status,$sendTo);
+        if(get_class($sendTo)==="App\Models\User"){
+            $email = $sendTo->email;
+        }else{
+            $email = array();
+            foreach ($sendTo as $key => $value) {
+                array_push($email, $value);
+            }
+        }
+        // dd($email);
+        $details = [
+            'email' => $email, //Arr::pluck(Auth::user()->acknowledgment()->toArray(),
+            'data'=>$this->code
+        ];
+        // dd($details);
+        // dd($this->req->req_status,$email,$details);
         SendEmail::dispatch($details);
     }
     public function updateStatus($status){
@@ -89,11 +161,14 @@ class DocumentRequestAction extends Component
                     # code...
                     break;
             }
+
         }
         if($this->comment){
             $this->req->remark = auth()->user()->name.' : '.$this->comment;
         }
+        // $this->sendEmail('acknowledgment');
         $this->req->save();
+        $this->sendEmail();
         $this->emitUp('actionUpdate');
     }
 

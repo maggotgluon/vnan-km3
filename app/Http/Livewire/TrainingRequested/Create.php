@@ -16,7 +16,7 @@ use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Illuminate\Support\Str;
-use App\Jobs\SendEmail;
+use App\Jobs\SendEmailTraining as SendEmail;
 
 use WireUi\Traits\Actions;
 use Livewire\WithFileUploads;

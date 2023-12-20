@@ -19,7 +19,9 @@
         </div>
     @endisset
     {{-- {{var_export(asset($req->info->meta_value['file_pdf']))}} --}}
-    <livewire:components.pdf-viewer :wire:key="$req->req_code" :file="asset($req->info->meta_value['file_pdf'])"/>
+    @isset ($req->info->meta_value['file_pdf'])
+        <livewire:components.pdf-viewer :wire:key="$req->req_code" :file="asset($req->info->meta_value['file_pdf'])"/>
+    @endisset
 
 
 
