@@ -51,30 +51,31 @@ class DocumentRequestAction extends Component
         
                 // $sendTo=Auth::user()->documentReviewer()->pluck('email');
                 // $sendTo=$sendTo->merge(Auth::user()->acknowledgment()->pluck('email'));
-                // dd($sendTo);
+        $user =  user::find($this->req->user_id);
+        // dd($user,$user->acknowledgment());
         switch ($this->req->req_status) {
             case 1:
                 # sended
-                $sendTo=Auth::user()->documentReviewer()->pluck('email');
-                $sendTo=$sendTo->merge(Auth::user()->acknowledgment()->pluck('email'));
+                $sendTo=$user->documentReviewer()->pluck('email');
+                $sendTo=$sendTo->merge($user->acknowledgment()->pluck('email'));
                 break;
             case 2:
                 # reviewed
-                $sendTo=Auth::user()->documentApprover()->pluck('email');
+                $sendTo=$user->documentApprover()->pluck('email');
                 break;
             case 3:
                 # approved
-                $sendTo=Auth::user()->acknowledgment()->pluck('email');
-                $sendTo=$sendTo->push(Auth::user()->email);
+                $sendTo=$user->acknowledgment()->pluck('email');
+                $sendTo=$sendTo->push($user->email);
                 break;
             case -1:
                 # rejected
-                $sendTo=Auth::user()->acknowledgment()->pluck('email');
-                $sendTo=$sendTo->push(Auth::user()->email);
+                $sendTo=$user->acknowledgment()->pluck('email');
+                $sendTo=$sendTo->push($user->email);
                 break;
             default:
                 # code...
-                $sendTo=Auth::user();
+                $sendTo=$user->email;
                 break;
         }
         // dd(Auth::user()->user_level,Auth::user()->acknowledgment());

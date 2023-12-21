@@ -20,10 +20,10 @@
             <x-dropdown.item label="ขึ้นทะเบียนการเอกสาร"
             :href="route('document.request.create')" />
 
-            @can('review_document')
+            @canany(['review_document','publish_document'])
                 <x-dropdown.item label="จัดการเอกสาร"
                 :href="route('document.request.index')" />
-            @endcan
+            @endcanany
             @can('edit_document')
                 <x-dropdown.item label="เอกสารของฉัน"
                 :href="route('document.request.myIndex',Auth::user())" />

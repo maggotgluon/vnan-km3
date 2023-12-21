@@ -21,7 +21,7 @@
                 <td class="p-2 md:border border-primary-300 table-row-group lg:table-cell md:whitespace-nowrap" data-cell="Detail">
                    <x-button label="{{ $req->req_title }}" :href="route('document.request.show',['id'=>$req->req_code])" />
                    <div>
-                    <x-button label="edit" :href="route('document.request.edit',['id'=>$req->req_code])" />
+                    <!-- <x-button label="edit" :href="route('document.request.edit',['id'=>$req->req_code])" /> -->
                    </div>
                 </td>
                 <td class="p-2 md:border border-primary-300 table-row lg:table-cell text-left md:text-center" data-cell="Update">

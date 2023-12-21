@@ -34,7 +34,7 @@
     <p>
     @switch($request->req_status)
         @case(-1)
-        <span class="bg-reject status">สถานะ : ปฏิเศษ</span>
+        <span class="bg-reject status">สถานะ : ปฏิเสธ</span>
             @break
         @case(1)
         <span class="bg-Pending status">สถานะ : รอการตรวจสอบ</span>
