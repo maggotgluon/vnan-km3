@@ -4,6 +4,7 @@ namespace App\Http\Livewire\DocumentRequested;
 
 use App\Models\DocumentRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,7 +36,11 @@ class Index extends Component
             // dd(DocumentRequest::with('info')->whereBelongsTo($user));
             $this->reqs = DocumentRequest::with('info')->whereBelongsTo($user);
         }else{
-            $this->reqs = DocumentRequest::with('info');
+            if(Gate::allows('publish_document')){
+                $this->reqs = DocumentRequest::with('info')->where('req_status',2);
+            }else{
+                $this->reqs = DocumentRequest::with('info');
+            }
         }
     }
     public function render()
