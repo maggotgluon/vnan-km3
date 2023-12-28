@@ -17,10 +17,18 @@
                 @foreach ($requests as $req)
                 <tr class="border border-primary-300 border-separate">
                 <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">{{ $req->req_code }}</td>
-                <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">{{ $req->req_obj->discription() }}</td>
+                <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">
+                    {{ $req->req_obj->discription() }}
+                </td>
                 <td class="p-2 md:border border-primary-300 table-row-group lg:table-cell md:whitespace-nowrap" data-cell="Detail">
                    <x-button label="{{ $req->req_title }}" :href="route('document.request.show',['id'=>$req->req_code])" />
                    <div>
+                    @isset($req->info->meta_value['effective'])
+                    <div>effective : {{ date($req->info->meta_value['effective']) }}</div>
+                    @endisset
+                    @isset($req->info->meta_value['ver'])()
+                    <div>Rev : {{ sprintf('%02d',$req->info->meta_value['ver']) }}</div>
+                    @endisset
                     <!-- <x-button label="edit" :href="route('document.request.edit',['id'=>$req->req_code])" /> -->
                    </div>
                 </td>

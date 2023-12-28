@@ -275,7 +275,7 @@ class DocumentRequestAction extends Component
                 'effective'=>$this->req->info->meta_value['effective'],
                 'ages'=>$this->req->info->meta_value['age'],
                 'department'=>User::find($this->req->user_id)->department->value,
-                'status'=>1,
+                'status'=>2,
             ]);
         } catch (\Throwable $th) {
             throw $th;

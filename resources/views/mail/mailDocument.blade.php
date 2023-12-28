@@ -58,14 +58,14 @@
     <b>ข้อมูล</b><br>
     
         รหัสเอกสาร : {{$request->req_title}} rev. {{$request->info->meta_value['ver']??"0"}}<br>
-        ชื่อเอกสาร : {{$request->info->meta_value['name_en']}} {{$request->info->meta_value['name_th']}}<br>
+        ชื่อเอกสาร : {{$request->info->meta_value['name_en']??''}} {{$request->info->meta_value['name_th']??''}}<br>
         
         รายละเอียด คำร้อง<br>
-        {{$request->info->meta_value['discription']}}
+        {{$request->info->meta_value['discription']??''}}
 
         @if ($request->req_status===3)
         <p>
-            เอกสารจะมีผลบังคับใช้งาน {{$request->info->meta_value['effective']}}
+            เอกสารจะมีผลบังคับใช้งาน {{$request->info->meta_value['effective']??''}}
         </p>
         @endif
             <div style="margin-top: 1rem;">

@@ -29,7 +29,7 @@
                         {{ $doc->doc_type }}
                     </td>
                     <td class="p-2 md:border border-primary-300 table-row-group md:table-cell text-left md:text-center" data-cell="No">
-                        {{ $doc->doc_code }} Rev.{{ $doc->doc_ver }}
+                        {{ $doc->doc_code }} Rev.{{ sprintf('%02d',$doc->doc_ver) }}
                     </td>
                     <td class="p-2 md:border border-primary-300 table-row-group lg:table-cell md:whitespace-nowrap" data-cell="Detail">
                         <x-button

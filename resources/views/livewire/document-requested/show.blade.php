@@ -18,10 +18,18 @@
             {{$req->info->meta_value['discription']}}
         </div>
     @endisset
+
+    <ul>
+    @foreach($req->info->meta_value as $key=>$val)
+        <li>{{$key}} : {{$val}}</li>
+    @endforeach
+    </ul>
     {{-- {{var_export(asset($req->info->meta_value['file_pdf']))}} --}}
     @isset ($req->info->meta_value['file_pdf'])
         <livewire:components.pdf-viewer :wire:key="$req->req_code" :file="asset($req->info->meta_value['file_pdf'])"/>
     @endisset
+
+    {{$req}}
 
 
 

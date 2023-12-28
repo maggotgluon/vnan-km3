@@ -22,6 +22,7 @@ class Index extends Component
             $docs = Document::where('status',1)->get();
             // dd($schdule,$docs);
             foreach ($schdule as $key => $doc) {
+                // dd($doc,$doc->effective<=now()&& $doc->status ==2,$doc->status);
 
                 if($doc->effective<=now() && $doc->status->value ==2){
                     // dd($doc,$doc->effective<=now()&& $doc->status ==2,$doc->status);

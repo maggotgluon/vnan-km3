@@ -10,7 +10,9 @@
     </div> --}}
     <div class="@xs:flex grid gap-2">
         <!-- <x-button label="mail" wire:click="sendEmail" spinner/> -->
-
+        @isset ($req->remark)
+            {{$req->remark}}
+        @endisset
         @if ($remark)
         <div class="grid gap-2">
             <x-textarea label="Remark" wire:model="comment"/>
